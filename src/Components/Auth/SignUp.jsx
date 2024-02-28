@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { SignUpFirebase } from "../../Services/Authentication";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { theme } from "../../Colors/color";
 
 const initialState = {
   name: "",
@@ -47,7 +48,23 @@ const SignUp = () => {
       <Box sx={style.bg}>
         <Box sx={style.LoginBox}>
           <Typography sx={style.heading}>Sign Up</Typography>
-          <TextField
+          <div class="section">
+            <input
+              className="input"
+              name="name"
+              id="name"
+              value={formData.name}
+              onChange={(e) => handleOnChange("name", e.target.value)}
+              type="text"
+              placeholder="Enter Your Full Name"
+              required
+            />
+            <label class="label" html="name">
+              Enter Your Full Name
+            </label>
+            <div class="error"></div>
+          </div>
+          {/* <TextField
             label="Enter Your Full Name"
             variant="outlined"
             value={formData.name}
@@ -57,8 +74,24 @@ const SignUp = () => {
               width: "100%",
               background: "transparent",
             }}
-          />
-          <TextField
+          /> */}
+          <div class="section">
+            <input
+              className="input"
+              name="name"
+              id="name"
+              value={formData.email}
+              onChange={(e) => handleOnChange("email", e.target.value)}
+              type="text"
+              placeholder="Enter Your Email"
+              required
+            />
+            <label class="label" html="name">
+              Enter Your Email"
+            </label>
+            <div class="error"></div>
+          </div>
+          {/* <TextField
             label="Enter Your Email"
             variant="outlined"
             value={formData.email}
@@ -68,8 +101,24 @@ const SignUp = () => {
               width: "100%",
               background: "transparent",
             }}
-          />
-          <TextField
+          /> */}
+          <div class="section">
+            <input
+              className="input"
+              name="name"
+              id="name"
+              value={formData.phone}
+              onChange={(e) => handleOnChange("phone", e.target.value)}
+              type="text"
+              placeholder="Enter Your Phone"
+              required
+            />
+            <label class="label" html="name">
+              Enter Your Phone
+            </label>
+            <div class="error"></div>
+          </div>
+          {/* <TextField
             label="Enter Your Phone"
             variant="outlined"
             value={formData.phone}
@@ -79,28 +128,68 @@ const SignUp = () => {
               width: "100%",
               background: "transparent",
             }}
-          />
-          <TextField
+          /> */}
+          <div class="section">
+            <input
+              className="input"
+              name="name"
+              id="name"
+              value={formData.password}
+              onChange={(e) => handleOnChange("password", e.target.value)}
+              type="password"
+              placeholder="Enter Your Password"
+              required
+            />
+            <label class="label" html="name">
+              Enter Your Password
+            </label>
+            <div class="error"></div>
+          </div>
+          {/* <TextField
             label="Enter Your Password"
             type="password"
             value={formData.password}
             onChange={(e) => handleOnChange("password", e.target.value)}
             variant="outlined"
             sx={{ marginBottom: "15px", width: "100%" }}
-          />
-          <TextField
+          /> */}
+          <div class="section">
+            <input
+              className="input"
+              name="name"
+              id="name"
+              value={formData.confirmPassword}
+              onChange={(e) =>
+                handleOnChange("confirmPassword", e.target.value)
+              }
+              type="password"
+              placeholder="Confirm Password"
+              required
+            />
+            <label class="label" html="name">
+              Confirm Password
+            </label>
+            <div class="error"></div>
+          </div>
+          {/* <TextField
             label="Confirm Password"
             value={formData.confirmPassword}
             onChange={(e) => handleOnChange("confirmPassword", e.target.value)}
             type="password"
             variant="outlined"
             sx={{ marginBottom: "15px", width: "100%" }}
-          />
+          /> */}
           <Button variant="contained" sx={style.btn} onClick={onSubmit}>
             LOG IN
           </Button>
           <Typography sx={style.slogan}>
-            Already have an account?<Link to={"/Login"}>Register</Link>
+            Already have an account?
+            <Link
+              to={"/Login"}
+              style={{ textDecoration: "none", color: theme.secondary }}
+            >
+              Register
+            </Link>
           </Typography>
         </Box>
       </Box>
@@ -125,7 +214,7 @@ const style = {
     width: "20%",
     borderRadius: "1rem",
     padding: "1.3rem",
-    background: "rgba(255, 255, 255, 0.25)",
+    background: "rgba(0, 0, 0, 0.3)",
     boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.2)",
     border: "1px solid rgba(255, 255, 255, 0.18)",
     backdropFilter: "blur(4px)",
@@ -146,20 +235,22 @@ const style = {
   heading: {
     width: "100%",
     textAlign: "center",
-    fontSize: "24px",
+    fontSize: "30px",
     fontWeight: 600,
-    color: "black",
+    color: "white",
     fontFamily: "poppins",
     paddingBottom: "25px",
+    opacity: 0.7,
   },
   slogan: {
     width: "100%",
     textAlign: "center",
     fontSize: "17px",
     fontWeight: 600,
-    color: "black",
+    color: "white",
     fontFamily: "poppins",
     paddingTop: "15px",
+    opacity: 0.7,
   },
   btn: {
     fontWeight: 600,
@@ -168,5 +259,6 @@ const style = {
     paddingY: "10px",
     fontFamily: "Poppins",
     marginTop: "1rem",
+    background: theme.secondary,
   },
 };
