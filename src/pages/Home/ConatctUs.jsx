@@ -25,7 +25,7 @@ const ConatctUs = () => {
                 <Box>
                   <Typography sx={style.main}>Binghamton, New York</Typography>
                   <Typography sx={style.mini}>
-                    4343 Hinkle Deegan Lake Road
+                    123 Hinkle Deegan Lake Road
                   </Typography>
                 </Box>
               </Box>
@@ -41,7 +41,7 @@ const ConatctUs = () => {
               <Box sx={style.addressBox}>
                 <MarkunreadIcon sx={{ color: theme.secondary, fontSize: 50 }} />
                 <Box>
-                  <Typography sx={style.main}>support@colorlib.com</Typography>
+                  <Typography sx={style.main}>support@xyz.com</Typography>
                   <Typography sx={style.mini}>
                     Send us your query anytime!
                   </Typography>

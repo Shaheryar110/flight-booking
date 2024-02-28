@@ -1,12 +1,19 @@
 import { Avatar, Box, Container, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../../Assets/Images/logo.png";
 import { theme } from "../../Colors/color";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
+import { Logout } from "@mui/icons-material";
+import { signOut } from "firebase/auth";
+import { auth } from "../../Firebase/Config";
+import toast from "react-hot-toast";
 
 const Header = () => {
+  const { currentUser } = useContext(AuthContext);
   const [scrolled, setScrolled] = useState(false);
-  const [user, setUser] = useState(false);
+  const [isShow, setisShow] = useState(false);
+  const [user, setUser] = useState();
   const redirection = () => {};
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +30,21 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  useEffect(() => {
+    setUser(currentUser);
+  }, [currentUser]);
+  const showPopup = () => {
+    setisShow(!isShow);
+  };
+  const Logout = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Sign Out SuccessFully");
+      })
+      .catch((error) => {
+        toast.error("Something went wrong");
+      });
+  };
   return (
     <Box sx={style.header}>
       <Container
@@ -50,11 +72,37 @@ const Header = () => {
             <Typography sx={style.color}>Customer</Typography>
             <Typography sx={style.color}>Admin</Typography>
             {user ? (
-              <Avatar
-                alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
-                sx={{ width: 36, height: 36 }}
-              />
+              <Box sx={{ position: "relative" }}>
+                <Avatar
+                  alt={user.displayName}
+                  src={user.displayName}
+                  onClick={() => showPopup()}
+                  sx={{ width: 36, height: 36, cursor: "pointer" }}
+                />
+                {isShow && (
+                  <Box
+                    sx={{
+                      width: "130px",
+                      height: "50px",
+                      borderRadius: "10px",
+                      position: "absolute",
+                      background: "white",
+                      boxShadow: 4,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      top: "110%",
+                    }}
+                  >
+                    <Typography
+                      onClick={() => Logout()}
+                      sx={[{ color: "black !important" }, style.color]}
+                    >
+                      Logout
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
             ) : (
               <>
                 <Typography onClick={() => redirection()} sx={style.color}>

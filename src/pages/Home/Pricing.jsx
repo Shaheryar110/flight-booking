@@ -44,11 +44,7 @@ const Pricing = () => {
   return (
     <Box sx={style.paret}>
       <Container sx={{ maxWidth: { lg: "1400px" } }}>
-        <Typography
-          sx={style.heading}
-          data-aos="flip-left"
-          data-aos-offset="1000"
-        >
+        <Typography sx={style.heading} data-aos="flip-left">
           We Provide Affordable Prices
         </Typography>
         <Typography sx={style.desc} data-aos="flip-left">
