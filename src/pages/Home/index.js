@@ -13,7 +13,16 @@ const Index = () => {
       <Box sx={style.bannerSection}>
         <Box sx={style.bannerOverlay}></Box>
         <Container sx={style.container}>
-          <Box>
+          <Box
+            sx={{
+              display: {
+                md: "block",
+                xs: "flex",
+              },
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <Typography
               sx={style.minorText}
               data-aos="fade-right"
@@ -31,9 +40,10 @@ const Index = () => {
             <Typography
               sx={{
                 color: "white",
-                width: "50%",
+                width: { md: "50%", sx: "100%" },
                 fontSize: 17,
                 marginBottom: 2,
+                textAlign: { md: "left", xs: "center" },
               }}
               data-aos="fade-right"
               data-aos-offset="200"
@@ -97,7 +107,7 @@ const style = {
     fontFamily: "Poppins",
   },
   mainText: {
-    fontSize: 60,
+    fontSize: { md: 60, sm: 40, xs: 30 },
     textTransform: "uppercase",
     color: "white",
     fontWeight: 800,

@@ -1,4 +1,4 @@
-import { Avatar, Box, Container, Typography } from "@mui/material";
+import { Avatar, Box, Container, Drawer, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import logo from "../../Assets/Images/logo.png";
 import { theme } from "../../Colors/color";
@@ -8,6 +8,8 @@ import { Logout } from "@mui/icons-material";
 import { signOut } from "firebase/auth";
 import { auth } from "../../Firebase/Config";
 import toast from "react-hot-toast";
+import MenuIcon from "@mui/icons-material/Menu";
+import { DrawerList } from "./DrawerList";
 
 const Header = () => {
   const { currentUser } = useContext(AuthContext);
@@ -15,6 +17,11 @@ const Header = () => {
   const [isShow, setisShow] = useState(false);
   const [user, setUser] = useState();
   const redirection = () => {};
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -68,9 +75,30 @@ const Header = () => {
             </Typography>
           </Box>
           <Box sx={style.nav}>
-            <Typography sx={style.color}>Home</Typography>
-            <Typography sx={style.color}>Customer</Typography>
-            <Typography sx={style.color}>Admin</Typography>
+            <Typography sx={style.color}>
+              <Link
+                to={"/"}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Home
+              </Link>{" "}
+            </Typography>
+            <Typography sx={style.color}>
+              <Link
+                to={"/Customers"}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Customer
+              </Link>
+            </Typography>
+            <Typography sx={style.color}>
+              <Link
+                to={"/Admin"}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Admin
+              </Link>
+            </Typography>
             {user ? (
               <Box sx={{ position: "relative" }}>
                 <Avatar
@@ -116,6 +144,12 @@ const Header = () => {
               </>
             )}
           </Box>
+          <Box sx={style.mobileMenu} onClick={toggleDrawer(true)}>
+            <MenuIcon sx={{ color: "white", fontSize: 25 }} />
+          </Box>
+          <Drawer open={open} onClose={toggleDrawer(false)}>
+            <DrawerList onClick={toggleDrawer(false)} />
+          </Drawer>
         </Box>
       </Container>
     </Box>
@@ -136,8 +170,8 @@ const style = {
     paddingBottom: "20px",
     paddingTop: "20px",
     // background: "rgba(255, 255, 255, 0.15)",
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: { sm: "15px", xs: 1 },
+    paddingRight: { sm: "15px", xs: 1 },
     transition: "all ease-out 0.3s",
   },
   row: {
@@ -151,10 +185,18 @@ const style = {
   },
   nav: {
     paddingRight: "15px",
-    display: "flex",
+    display: { sm: "flex", xs: "none" },
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    gap: "20px",
+  },
+  mobileMenu: {
+    paddingRight: "15px",
+    display: { sm: "none", xs: "flex" },
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "end",
     gap: "20px",
   },
   color: {

@@ -19,7 +19,18 @@ const ConatctUs = () => {
         <Container sx={{ maxWidth: { lg: "1400px" } }}>
           <Typography sx={style.heading}>Conatct Us</Typography>
           <Grid container columnSpacing={5} sx={{ marginTop: "5rem" }}>
-            <Grid item lg={4}>
+            <Grid
+              item
+              lg={4}
+              xs={12}
+              sx={{
+                display: { lg: "block", xs: "flex" },
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: { md: "row", xs: "column" },
+                gap: { md: 10, xs: 5 },
+              }}
+            >
               <Box sx={style.addressBox}>
                 <DeckIcon sx={{ color: theme.secondary, fontSize: 50 }} />
                 <Box>
@@ -48,7 +59,7 @@ const ConatctUs = () => {
                 </Box>
               </Box>
             </Grid>
-            <Grid item lg={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 label="Enter Your Name"
                 variant="outlined"
@@ -68,6 +79,8 @@ const ConatctUs = () => {
             <Grid
               item
               lg={4}
+              md={6}
+              xs={12}
               sx={{
                 display: "flex",
                 alignItems: "end",

@@ -51,8 +51,13 @@ const Pricing = () => {
           Well educated, intellectual people, especially scientists at all times
           demonstrate considerably.
         </Typography>
-        <Grid container columnSpacing={5} sx={{ marginTop: "4rem" }}>
-          <Grid item lg={4} data-aos="zoom-in">
+        <Grid
+          container
+          columnSpacing={5}
+          rowSpacing={3}
+          sx={{ marginTop: "4rem", display: "flex", justifyContent: "center" }}
+        >
+          <Grid item lg={4} md={6} xs={12} data-aos="zoom-in">
             <Typography sx={style.pkgHeading}>Cheap Pakages</Typography>
             {Data.map((ite, index) => {
               return (
@@ -81,7 +86,7 @@ const Pricing = () => {
               );
             })}
           </Grid>
-          <Grid item lg={4} data-aos="zoom-in">
+          <Grid item lg={4} md={6} xs={12} data-aos="zoom-in">
             <Typography sx={style.pkgHeading}>Luxury Pakages</Typography>
             {Data.map((ite, index) => {
               return (
@@ -110,7 +115,7 @@ const Pricing = () => {
               );
             })}
           </Grid>
-          <Grid item lg={4} data-aos="zoom-in">
+          <Grid item lg={4} md={6} xs={12} data-aos="zoom-in">
             <Typography sx={style.pkgHeading}>Camping Pakages</Typography>
             {Data.map((ite, index) => {
               return (
@@ -151,7 +156,7 @@ const style = {
     paddingY: "5rem",
   },
   heading: {
-    fontSize: "36px",
+    fontSize: { md: "36px", xs: "30px" },
     fontFamily: "poppins",
     opacity: 0.8,
     fontWeight: 700,
@@ -160,7 +165,7 @@ const style = {
   desc: {
     textAlign: "center",
     opacity: 0.7,
-    fontSize: "18px",
+    fontSize: { md: "18px", xs: "16px" },
   },
   pkgHeading: {
     textAlign: "center",

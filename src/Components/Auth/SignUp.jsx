@@ -211,7 +211,7 @@ const style = {
     backgroundImage: `url(${bg})`,
   },
   LoginBox: {
-    width: "20%",
+    width: { lg: "20%", md: "40%", sm: "80%", xs: "100%" },
     borderRadius: "1rem",
     padding: "1.3rem",
     background: "rgba(0, 0, 0, 0.3)",
