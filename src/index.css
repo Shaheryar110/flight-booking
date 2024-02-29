@@ -75,7 +75,7 @@ body {
   color: red;
 }
 .MuiDrawer-paper {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.25) !important;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }

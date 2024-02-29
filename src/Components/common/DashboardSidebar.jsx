@@ -6,23 +6,20 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { AuthContext } from "../../Context/AuthContext";
 const drawerWidth = 240;
 
-function ResponsiveDrawer({ childern }) {
+function ResponsiveDrawer({ children }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -42,7 +39,7 @@ function ResponsiveDrawer({ childern }) {
   };
   const navItem = [
     {
-      name: "Flights",
+      name: "Available Flights",
       link: "/",
       icon: <HomeIcon sx={{ color: "inherit" }} />,
     },
@@ -152,11 +149,12 @@ function ResponsiveDrawer({ childern }) {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+          overflow: "hidden",
+          position: "relative",
         }}
       >
-        {childern}
+        {children}
       </Box>
     </Box>
   );

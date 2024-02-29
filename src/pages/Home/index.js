@@ -30,11 +30,7 @@ const Index = () => {
             >
               Away from monotonous life
             </Typography>
-            <Typography
-              data-aos="fade-right"
-              data-aos-offset="300"
-              sx={style.mainText}
-            >
+            <Typography data-aos="fade-right" sx={style.mainText}>
               Magical Travel
             </Typography>
             <Typography
