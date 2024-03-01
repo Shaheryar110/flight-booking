@@ -40,11 +40,13 @@ const Login = ({ admin }) => {
         setAdmin(value);
       }
     } else {
-      LoginFirebase(formData).then(() => {
-        toast.success("Registered Successfully");
-
+      const response = await LoginFirebase(formData);
+      if (response.success === true) {
+        toast.success("Login Successfull");
         navigate("/");
-      });
+      } else if (response.success === false) {
+        toast.error("Invalid Credentials");
+      }
     }
   };
   return (

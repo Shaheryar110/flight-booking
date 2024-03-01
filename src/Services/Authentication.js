@@ -48,17 +48,23 @@ export const SignUpFirebase = async (obj) => {
 
 export const LoginFirebase = async (obj) => {
   const { email, password } = obj;
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (emailPattern.test(email)) {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage, errorCode);
-      });
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    console.log(userCredential);
+
+    return { success: true, user: userCredential.user };
+  } catch (error) {
+    console.error(error);
+
+    const errorCode = error.code;
+    const errorMessage = error.message;
+
+    return { success: false, errorCode, errorMessage };
   }
 };
 
