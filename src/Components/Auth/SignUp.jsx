@@ -26,20 +26,39 @@ const SignUp = () => {
     }));
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    const { name, email, phone, password, confirmPassword } = formData;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (
-      formData.name == "" ||
-      formData.email == "" ||
-      formData.phone == "" ||
-      formData.password == "" ||
-      formData.confirmPassword == ""
+      name === "" ||
+      email === "" ||
+      phone === "" ||
+      password === "" ||
+      confirmPassword === ""
     ) {
-      toast.error("Fill All Feilds");
+      toast.error("Fill All Fields");
+      return;
+    }
+
+    if (
+      !emailPattern.test(email) ||
+      password !== confirmPassword ||
+      confirmPassword.length < 8
+    ) {
+      toast.error("Validation Error");
     } else {
-      SignUpFirebase(formData).then(() => {
-        toast.success("Registered Successfully");
-        navigate("/");
-      });
+      try {
+        const { res } = await SignUpFirebase(formData);
+        if (res === true) {
+          toast.success("Signup Successful");
+          navigate("/");
+        } else if (res === false) {
+          toast.error("Already Registered");
+        }
+      } catch (error) {
+        console.error(error, "error");
+      }
     }
   };
 

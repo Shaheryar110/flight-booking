@@ -1,16 +1,18 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import bg from "../../Assets/Images/bg.jpeg";
 import { theme } from "../../Colors/color";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { LoginFirebase } from "../../Services/Authentication";
+import { AdminLogin, LoginFirebase } from "../../Services/Authentication";
+import { AuthContext } from "../../Context/AuthContext";
 const initialState = {
   email: "",
   password: "",
 };
-const Login = () => {
+const Login = ({ admin }) => {
   const navigate = useNavigate();
+  const { setAdmin } = useContext(AuthContext);
   const [formData, setFormData] = useState(initialState);
 
   const handleOnChange = (key, val) => {
@@ -19,12 +21,28 @@ const Login = () => {
       [key]: val,
     }));
   };
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (formData.email == "" || formData.password == "") {
       toast.error("Fill All Feilds");
+      return;
+    }
+    if (admin === true) {
+      const { res } = await AdminLogin(formData);
+      if (res === true) {
+        toast.success("Admin Login Successfull");
+        localStorage.setItem("admin", true);
+        const value = localStorage.getItem("admin") === "true";
+        setAdmin(value);
+      } else {
+        toast.error("Invalid");
+        localStorage.setItem("admin", false);
+        const value = localStorage.getItem("admin") === "true";
+        setAdmin(value);
+      }
     } else {
       LoginFirebase(formData).then(() => {
         toast.success("Registered Successfully");
+
         navigate("/");
       });
     }
@@ -33,7 +51,9 @@ const Login = () => {
     <>
       <Box sx={style.bg}>
         <Box sx={style.LoginBox}>
-          <Typography sx={style.heading}>LOG IN</Typography>
+          <Typography sx={style.heading}>
+            {admin ? "ADMIN LOG IN" : "LOG IN"}
+          </Typography>
           <div class="section">
             <input
               className="input"

@@ -93,7 +93,7 @@ const Header = () => {
             </Typography>
             <Typography sx={style.color}>
               <Link
-                to={"/Admin"}
+                to={"/Aircrafts"}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 Admin

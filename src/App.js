@@ -1,23 +1,41 @@
 import Home from "../src/pages/Home";
 import Customers from "../src/pages/Customers";
-import Admin from "../src/pages/Admin";
+import Airports from "../src/pages/Airports";
+import Aircrafts from "../src/pages/Aircrafts";
+import ViewFlights from "../src/pages/ViewFlights";
+import AddFlights from "../src/pages/AddFlights";
+
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Login from "./Components/Auth/Login";
 import SignUp from "./Components/Auth/SignUp";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "./Context/AuthContext";
 AOS.init();
 function App() {
+  const { admin } = useContext(AuthContext);
+  const protectedRoute = (component) => {
+    if (admin) {
+      return component;
+    } else {
+      return <Login admin={true} />;
+    }
+  };
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Admin" element={<Admin />} />
+        <Route path="/Aircrafts" element={protectedRoute(<Aircrafts />)} />
         <Route path="/Customers" element={<Customers />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/Login" element={<Login admin={false} />} />
         <Route path="/SignUp" element={<SignUp />} />
+
+        <Route path="/Airports" element={<Airports />} />
+        <Route path="/AddFlights" element={<AddFlights />} />
+        <Route path="/ViewFlights" element={<ViewFlights />} />
       </Routes>
       <Toaster />
     </>
