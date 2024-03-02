@@ -7,19 +7,10 @@ const Index = () => {
     <>
       <AdminDashboard>
         <Box sx={style.bg}>
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              height: "100vh",
-              width: "100%",
-              backdropFilter: "blur(7px)",
-            }}
-          ></div>
-          <Box sx={{ position: "relative" }}>
+     
+         
             <Typography>View Flights</Typography>
-          </Box>
+     
         </Box>
       </AdminDashboard>
     </>

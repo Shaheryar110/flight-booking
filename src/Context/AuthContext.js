@@ -22,6 +22,11 @@ export const AuthContextProvider = ({ children }) => {
     };
   }, []);
 
+  // useEffect(() => {
+  //   const value = localStorage.getItem("admin") === "true";
+  //   console.log(value,"valueContext");
+  //   setAdmin(value)
+  // }, [admin]);
   return (
     <AuthContext.Provider value={{ currentUser, admin, setAdmin }}>
       {children}

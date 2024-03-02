@@ -93,7 +93,7 @@ const Login = ({ admin }) => {
           <Button variant="contained" sx={style.btn} onClick={onSubmit}>
             LOG IN
           </Button>
-          <Typography sx={style.slogan}>
+        { !admin && <Typography sx={style.slogan}>
             Did'nt have an account?
             <Link
               to={"/SignUp"}
@@ -101,7 +101,7 @@ const Login = ({ admin }) => {
             >
               Register
             </Link>
-          </Typography>
+          </Typography>}
         </Box>
       </Box>
     </>
@@ -122,7 +122,7 @@ const style = {
     backgroundImage: `url(${bg})`,
   },
   LoginBox: {
-    height: "50%",
+    // height: "50%",
     width: { lg: "20%", md: "40%", sm: "80%", xs: "100%" },
     borderRadius: "1rem",
     padding: "1.3rem",

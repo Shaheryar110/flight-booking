@@ -33,7 +33,9 @@ body {
 .input[type="submit"] {
   cursor: pointer;
 }
-
+ .black{
+  color: black;
+ }
 .label {
   background-color: transparent;
   justify-self: start;

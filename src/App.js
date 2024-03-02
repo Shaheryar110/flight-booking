@@ -18,6 +18,7 @@ AOS.init();
 function App() {
   const { admin } = useContext(AuthContext);
   const protectedRoute = (component) => {
+    console.log(admin,"admin");
     if (admin) {
       return component;
     } else {
@@ -33,9 +34,9 @@ function App() {
         <Route path="/Login" element={<Login admin={false} />} />
         <Route path="/SignUp" element={<SignUp />} />
 
-        <Route path="/Airports" element={<Airports />} />
-        <Route path="/AddFlights" element={<AddFlights />} />
-        <Route path="/ViewFlights" element={<ViewFlights />} />
+        <Route path="/Airports" element={protectedRoute(<Airports />)} />
+        <Route path="/AddFlights" element={protectedRoute(<AddFlights />)} />
+        <Route path="/ViewFlights" element={protectedRoute(<ViewFlights />)} />
       </Routes>
       <Toaster />
     </>

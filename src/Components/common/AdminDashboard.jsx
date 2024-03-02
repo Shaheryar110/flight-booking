@@ -32,6 +32,7 @@ function AdminDashboard({ children }) {
   const handleLogout = () => {
     localStorage.setItem("admin", false);
     const value = localStorage.getItem("admin") === "true";
+    console.log(value,"value");
     setAdmin(value);
   };
   const handleDrawerClose = () => {
@@ -187,8 +188,8 @@ AdminDashboard.propTypes = {
 export default AdminDashboard;
 const styles = {
   flex: {
-    position: "absolute",
-    bottom: 250,
+    // position: "absolute",
+    // bottom: 250,
     width: "100%",
   },
   font: {

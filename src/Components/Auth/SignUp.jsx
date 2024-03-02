@@ -101,7 +101,7 @@ const SignUp = () => {
               id="name"
               value={formData.email}
               onChange={(e) => handleOnChange("email", e.target.value)}
-              type="text"
+              type="email"
               placeholder="Enter Your Email"
               required
             />
