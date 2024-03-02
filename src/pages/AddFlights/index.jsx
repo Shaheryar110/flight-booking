@@ -104,14 +104,14 @@ setAircraft(aircraftData)
           <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={formData.aircraft.name}
+          value={formData?.aircraft?.id}
           label="Add Aircraft"
           fullWidth
-          onChange={(e)=>handleOnChange("aircraft",e.target.value)}
+          onChange={(e)=>handleOnChange("aircraft", aircraft.find(item => item.id === e.target.value))}
           sx={styles.select}
         >
           {aircraft?.map((data)=>(
-  <MenuItem value={data}>{data.name}</MenuItem>
+  <MenuItem  key={data.id} value={data.id}>{data?.name}</MenuItem>
           ))}
         
           
@@ -122,14 +122,14 @@ setAircraft(aircraftData)
           <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={formData.arrivalAirport.name}
+          value={formData?.arrivalAirport?.id}
           label="Add Arival Airport"
           fullWidth
-          onChange={(e)=>handleOnChange("arrivalAirport",e.target.value)}
+          onChange={(e) => handleOnChange("arrivalAirport", airport?.find(item => item.id === e.target.value))}
           sx={styles.select}
         >
           {airport?.map((data)=>(
-  <MenuItem value={data}>{data.name}</MenuItem>
+  <MenuItem key={data.id} value={data.id}>{data?.name}</MenuItem>
           ))}
         
           
@@ -150,14 +150,14 @@ setAircraft(aircraftData)
           <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={formData.departureAirport.name}
+          value={formData?.departureAirport?.id}
           label="Add Departure Airport"
           fullWidth
-          onChange={(e)=>handleOnChange("departureAirport",e.target.value)}
+          onChange={(e) => handleOnChange("departureAirport", airport?.find(item => item.id === e.target.value))}
           sx={styles.select}
         >
           {airport?.map((data)=>(
-  <MenuItem value={data}>{data.name}</MenuItem>
+  <MenuItem key={data.id} value={data.id}>{data?.name}</MenuItem>
           ))}
         
           

@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore"
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore"
 import { db } from "../Firebase/Config"
 
  export const getData=async(collName)=>{
@@ -14,6 +14,19 @@ import { db } from "../Firebase/Config"
         console.log("error",error);
     }
 }
+
+export const getSpcecificFlight=async(id)=>{
+    console.log(id,"idServices");
+    const collRef=doc(db,"flights",id)
+    try {
+        const snapDoc= await getDoc(collRef)
+      
+        return snapDoc.data()
+    } catch (error) {
+        console.log("error",error);
+    }
+}
+
 
 export const userBookFlights = async(id)=>{
     let temp = [];

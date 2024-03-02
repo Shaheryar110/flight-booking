@@ -1,16 +1,60 @@
 import React,{useState,useEffect} from "react";
 import bg from "../../Assets/Images/bg.jpeg";
-import { Box, Typography,Grid } from "@mui/material";
+import { Box, Typography,Grid, Button } from "@mui/material";
 import AdminDashboard from "../../Components/common/AdminDashboard";
 import {getData} from "../../Services/ReadData"
+import { theme } from "../../Colors/color";
+import BasicModal from "../../Components/common/BasicModal";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../Firebase/Config";
+import toast from "react-hot-toast";
 const Index = () => {
-  const [flights,setFlight]=useState();
-  useEffect(()=>{
-    getData('flights').then((data)=>{console.log(data);setFlight(data)})
-  },[])
+  const [flights,setFlight]=useState([]);
+  const [openFlights, setOpenFlights] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = (index) => {
+    const newOpenFlights = [...openFlights];
+    newOpenFlights[index] = true;
+    setOpenFlights(newOpenFlights);
+  };
+const handleDelete=async(id)=>{
+const docRef=doc(db,"flights",id)
+try {
+  const res= await deleteDoc(docRef)
+  toast.success("Delete Success")
+  getData('flights').then(data => {
+    console.log(data);
+    setFlight(data);
+    setOpenFlights(Array(data.length).fill(false));
+  });
+
+} catch (error) {
+  toast.success("Delete Error")
+}
+}
+  const handleClose = (index) => {
+    const newOpenFlights = [...openFlights];
+    newOpenFlights[index] = false;
+    setOpenFlights(newOpenFlights);
+    getData('flights').then(data => {
+      console.log(data);
+      setFlight(data);
+      setOpenFlights(Array(data.length).fill(false));
+    });
+
+  };
+  
+  useEffect(() => {
+    getData('flights').then(data => {
+      console.log(data);
+      setFlight(data);
+      setOpenFlights(Array(data.length).fill(false)); // Initialize open states for each flight
+    });
+  }, []);
   return (
     <>
       <AdminDashboard>
+      
         <Box sx={style.bg}>
         <Typography sx={style.heading} >Flights Information</Typography>
         {flights && flights?.map((item,index)=>{
@@ -44,8 +88,14 @@ const Index = () => {
            });
           return (
             <Box sx={style.LoginBox} key={index}>
-              
+             <BasicModal open={openFlights[index]} onClose={() => handleClose(index)} id={item.id}/>
 <Grid container spacing={5}>
+  <Grid item lg={12}  md={12} sm={12} xs={12} >
+    <Box sx={style.space}>
+      <Button variant="contained" sx={style.btn} onClick={() => handleOpen(index)}>Edit</Button>
+      <Button variant="contained" sx={style.btn} onClick={()=>{handleDelete(item.id)}}>Delete</Button>
+    </Box>
+  </Grid>
   <Grid item lg={4} sm={6} xs={12}  >
   <Typography sx={style.static} >Air Craft Information</Typography>
   <Box sx={style.flexy} >
@@ -111,6 +161,20 @@ const Index = () => {
 
 export default Index;
 const style = {
+  space:{
+display:"flex",
+justifyContent:"space-between",
+alignItems:"center",
+  },
+  btn: {
+    fontWeight: 600,
+    fontSize: 15,
+    paddingX: "20px",
+    paddingY: "10px",
+    fontFamily: "Poppins",
+    marginTop: "1rem",
+    background: theme.secondary,
+  },
   flexy:{
     display: "flex",
     flexDirection:"row",
@@ -122,7 +186,8 @@ const style = {
     display: "flex",
 flexDirection:"column",
     height: "100vh",
-    width: "100vw",
+    width: "100%",
+    alignItems:"center",
     backgroundSize: "cover",
     backgroundImage: `url(${bg})`,
     overflowY:"scroll",
