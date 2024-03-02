@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "../Firebase/Config"
 
  export const getData=async(collName)=>{
@@ -13,4 +13,16 @@ import { db } from "../Firebase/Config"
     } catch (error) {
         console.log("error",error);
     }
+}
+
+export const userBookFlights = async(id)=>{
+    let temp = [];
+    const q = query(collection(db, "bookFlights"), where("userId", "==", id));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      temp.push( doc.data());
+    });
+return temp;
 }

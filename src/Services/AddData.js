@@ -43,4 +43,16 @@ export const AddAirport=async(form)=>{
             return{ res:false}
         }
         }
+        export const AddFlightBooking=async(form)=>{
+      
+            const collRef= collection(db,"bookFlights")
+            try {
+                const docRef=await addDoc(collRef,form)
+                console.log(docRef,"docRef");
+                return{ res:true}
+            } catch (error) {
+                console.log(error,"error");
+                return{ res:false}
+            }
+            }
     

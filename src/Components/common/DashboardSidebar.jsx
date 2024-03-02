@@ -6,6 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
+import { CiLogout } from "react-icons/ci";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -17,9 +18,14 @@ import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import { AuthContext } from "../../Context/AuthContext";
+import { Link } from "react-router-dom";
+import { auth } from "../../Firebase/Config";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 const drawerWidth = 240;
 
 function ResponsiveDrawer({ children }) {
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -37,15 +43,23 @@ function ResponsiveDrawer({ children }) {
       setMobileOpen(!mobileOpen);
     }
   };
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      navigate('/');
+    }).catch((error) => {
+      // An error happened.
+    });
+    
+  };
   const navItem = [
     {
       name: "Available Flights",
-      link: "/",
+      link: "/Customers",
       icon: <HomeIcon sx={{ color: "inherit" }} />,
     },
     {
       name: "Booked Flights",
-      link: "/Customers",
+      link: "/book-flights",
       icon: <AssignmentIndIcon sx={{ color: "inherit" }} />,
     },
   ];
@@ -66,13 +80,27 @@ function ResponsiveDrawer({ children }) {
       <Divider />
       <List>
         {navItem.map((text, index) => (
-          <ListItem key={text} disablePadding>
+          <Link  to={text.link} style={{textDecoration:"none",color:"inherit"}} >
+          <ListItem key={index} disablePadding>
             <ListItemButton>
               <ListItemIcon>{text.icon}</ListItemIcon>
               <ListItemText primary={text.name} />
             </ListItemButton>
           </ListItem>
+          </Link>
         ))}
+        <Box sx={{width:"100%"}}>
+        <List>
+          <ListItem disablePadding onClick={handleLogout}>
+            <ListItemButton>
+              <ListItemIcon>
+                <CiLogout />
+              </ListItemIcon>
+              <ListItemText primary={"Logout"} sx={{fontFamily:"poppins"}} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>
       </List>
     </div>
   );
@@ -160,12 +188,6 @@ function ResponsiveDrawer({ children }) {
   );
 }
 
-ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window: PropTypes.func,
-};
+
 
 export default ResponsiveDrawer;

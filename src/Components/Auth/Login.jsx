@@ -102,6 +102,13 @@ const Login = ({ admin }) => {
               Register
             </Link>
           </Typography>}
+          <Link  to={"/"}
+                style={{ textDecoration: "none", color: "inherit" }}>
+          <Button variant="contained" sx={style.btn} >
+            Back to Home page 
+          </Button>
+          </Link>
+         
         </Box>
       </Box>
     </>

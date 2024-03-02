@@ -29,7 +29,7 @@ const SignUp = () => {
   const onSubmit = async () => {
     const { name, email, phone, password, confirmPassword } = formData;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    const capitalLetterRegex = /[A-Z]/;
     if (
       name === "" ||
       email === "" ||
@@ -40,10 +40,17 @@ const SignUp = () => {
       toast.error("Fill All Fields");
       return;
     }
+    if (
+     
+      password.length > 8 && !capitalLetterRegex.test(password)
+    ) {
+      toast.error("Password must include Capital Letter");
+      return;
+    }
 
     if (
       !emailPattern.test(email) ||
-      password !== confirmPassword ||
+      password !== confirmPassword || 
       confirmPassword.length < 8
     ) {
       toast.error("Validation Error");
@@ -210,6 +217,12 @@ const SignUp = () => {
               Register
             </Link>
           </Typography>
+          <Link  to={"/"}
+                style={{ textDecoration: "none", color: "inherit" }}>
+          <Button variant="contained" sx={style.btn} >
+            Back to Home page 
+          </Button>
+          </Link>
         </Box>
       </Box>
     </>

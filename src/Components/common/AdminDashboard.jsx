@@ -34,6 +34,7 @@ function AdminDashboard({ children }) {
     const value = localStorage.getItem("admin") === "true";
     console.log(value,"value");
     setAdmin(value);
+    navigate('/');
   };
   const handleDrawerClose = () => {
     setIsClosing(true);

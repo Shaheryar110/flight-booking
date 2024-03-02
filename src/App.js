@@ -1,5 +1,6 @@
 import Home from "../src/pages/Home";
 import Customers from "../src/pages/Customers";
+import BookedFlights from "../src/pages/BookedFlights";
 import Airports from "../src/pages/Airports";
 import Aircrafts from "../src/pages/Aircrafts";
 import ViewFlights from "../src/pages/ViewFlights";
@@ -37,6 +38,7 @@ function App() {
         <Route path="/Airports" element={protectedRoute(<Airports />)} />
         <Route path="/AddFlights" element={protectedRoute(<AddFlights />)} />
         <Route path="/ViewFlights" element={protectedRoute(<ViewFlights />)} />
+        <Route path="/book-flights" element={<BookedFlights />} />
       </Routes>
       <Toaster />
     </>

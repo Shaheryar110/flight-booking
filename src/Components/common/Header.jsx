@@ -99,7 +99,7 @@ const Header = () => {
                 Admin
               </Link>
             </Typography>
-            {user ? (
+            {/* {user ? (
               <Box sx={{ position: "relative" }}>
                 <Avatar
                   alt={user.displayName}
@@ -142,7 +142,7 @@ const Header = () => {
                   </Link>
                 </Typography>
               </>
-            )}
+            )} */}
           </Box>
           <Box sx={style.mobileMenu} onClick={toggleDrawer(true)}>
             <MenuIcon sx={{ color: "white", fontSize: 25 }} />
