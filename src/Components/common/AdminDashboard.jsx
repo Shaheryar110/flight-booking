@@ -21,7 +21,7 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { GrView } from "react-icons/gr";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import { AuthContext } from "../../Context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const drawerWidth = 240;
 
 function AdminDashboard({ children }) {
@@ -32,9 +32,9 @@ function AdminDashboard({ children }) {
   const handleLogout = () => {
     localStorage.setItem("admin", false);
     const value = localStorage.getItem("admin") === "true";
-    console.log(value,"value");
+    console.log(value, "value");
     setAdmin(value);
-    navigate('/');
+    navigate("/");
   };
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -69,7 +69,7 @@ function AdminDashboard({ children }) {
     {
       name: "View Booked Flights",
       link: "/book-flights-admin",
-      icon: <MdAddCircleOutline />,
+      icon: <GrView />,
     },
     {
       name: "View Flights",
@@ -89,7 +89,9 @@ function AdminDashboard({ children }) {
           fontSize: 30,
         }}
       >
-        LOGO
+        <Link style={{ textDecoration: "none", color: "inherit" }} to={"/"}>
+          LOGO
+        </Link>
       </Typography>
       <Divider />
       <List>
@@ -123,7 +125,7 @@ function AdminDashboard({ children }) {
 
   return (
     <Box sx={{ display: "flex" }}>
-     <CssBaseline />
+      <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
@@ -141,7 +143,6 @@ function AdminDashboard({ children }) {
           >
             <MenuIcon />
           </IconButton>
-         
         </Toolbar>
       </AppBar>
       <Box
