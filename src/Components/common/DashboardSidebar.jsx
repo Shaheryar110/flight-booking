@@ -44,12 +44,13 @@ function ResponsiveDrawer({ children }) {
     }
   };
   const handleLogout = () => {
-    signOut(auth).then(() => {
-      navigate('/');
-    }).catch((error) => {
-      // An error happened.
-    });
-    
+    signOut(auth)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
   };
   const navItem = [
     {
@@ -75,32 +76,40 @@ function ResponsiveDrawer({ children }) {
           fontSize: 30,
         }}
       >
-        LOGO
+        <Link style={{ textDecoration: "none", color: "inherit" }} to={"/"}>
+          LOGO
+        </Link>
       </Typography>
       <Divider />
       <List>
         {navItem.map((text, index) => (
-          <Link  to={text.link} style={{textDecoration:"none",color:"inherit"}} >
-          <ListItem key={index} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{text.icon}</ListItemIcon>
-              <ListItemText primary={text.name} />
-            </ListItemButton>
-          </ListItem>
+          <Link
+            to={text.link}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ListItem key={index} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>{text.icon}</ListItemIcon>
+                <ListItemText primary={text.name} />
+              </ListItemButton>
+            </ListItem>
           </Link>
         ))}
-        <Box sx={{width:"100%"}}>
-        <List>
-          <ListItem disablePadding onClick={handleLogout}>
-            <ListItemButton>
-              <ListItemIcon>
-                <CiLogout />
-              </ListItemIcon>
-              <ListItemText primary={"Logout"} sx={{fontFamily:"poppins"}} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Box>
+        <Box sx={{ width: "100%" }}>
+          <List>
+            <ListItem disablePadding onClick={handleLogout}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <CiLogout />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"Logout"}
+                  sx={{ fontFamily: "poppins" }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Box>
       </List>
     </div>
   );
@@ -187,7 +196,5 @@ function ResponsiveDrawer({ children }) {
     </Box>
   );
 }
-
-
 
 export default ResponsiveDrawer;
