@@ -76,6 +76,11 @@ function AdminDashboard({ children }) {
       link: "/ViewFlights",
       icon: <GrView />,
     },
+    {
+      name: "View Leads",
+      link: "/Leads",
+      icon: <GrView />,
+    },
   ];
   const drawer = (
     <div>

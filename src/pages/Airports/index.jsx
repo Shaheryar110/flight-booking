@@ -9,11 +9,9 @@ import AdminDashboard from "../../Components/common/AdminDashboard";
 import { AddAirport } from "../../Services/AddData";
 
 const Index = () => {
- 
- 
   const [formData, setFormData] = useState({
-    city:"",
-    name:"",country:""
+    name: "",
+    country: "",
   });
 
   const handleOnChange = (key, val) => {
@@ -23,73 +21,67 @@ const Index = () => {
     }));
   };
   const onSubmit = async () => {
-    const {city,country,name}=formData
-    if (country === "" || name === "" || city === "") {
+    const { country, name } = formData;
+    if (country === "" || name === "") {
       toast.error("Fill All Feilds");
       return;
     }
-try {
-  const {res}=await AddAirport(formData)
-  if(res===true){
-    toast.success("Add Airport successfully");
-    setFormData({
-      city:"",
-      name:"",country:""
-    })
-  }else{
-    toast.error("Add Airport Error");
-  }
-} catch (error) {
-  console.log(error);
-}
-    
-   
+    try {
+      const { res } = await AddAirport(formData);
+      if (res === true) {
+        toast.success("Add Airport successfully");
+        setFormData({
+          name: "",
+          country: "",
+        });
+      } else {
+        toast.error("Add Airport Error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
       <AdminDashboard>
         <Box sx={style.bg}>
-         
-          
-        <Box sx={style.LoginBox}>
-          <Typography sx={style.heading}>
-            Add Airport
-          </Typography>
-          <div class="section">
-            <input
-              className="input"
-              type="text"
-              name="name"
-              id="name"
-              value={formData.name}
-              onChange={(e) => handleOnChange("name", e.target.value)}
-              placeholder="Airport Name"
-              required
-            />
-            <label class="label" html="name">
-            Airport Name
-            </label>
-            <div class="error"></div>
-          </div>
+          <Box sx={style.LoginBox}>
+            <Typography sx={style.heading}>Add Airport</Typography>
+            <div class="section">
+              <input
+                className="input"
+                type="text"
+                name="name"
+                id="name"
+                value={formData.name}
+                onChange={(e) => handleOnChange("name", e.target.value)}
+                placeholder="Airport Name"
+                required
+              />
+              <label class="label" html="name">
+                Airport Name
+              </label>
+              <div class="error"></div>
+            </div>
 
-          <div class="section">
-            <input
-              className="input"
-              name="country"
-              id="country"
-              value={formData.country}
-              onChange={(e) => handleOnChange("country", e.target.value)}
-              type="text"
-              placeholder="Country"
-              required
-            />
-            <label class="label" html="name">
-            Country
-            </label>
-            <div class="error"></div>
-          </div>
+            <div class="section">
+              <input
+                className="input"
+                name="country"
+                id="country"
+                value={formData.country}
+                onChange={(e) => handleOnChange("country", e.target.value)}
+                type="text"
+                placeholder="Country"
+                required
+              />
+              <label class="label" html="name">
+                Country
+              </label>
+              <div class="error"></div>
+            </div>
 
-          <div class="section">
+            {/* <div class="section">
             <input
               className="input"
               name="city"
@@ -104,13 +96,11 @@ try {
             City
             </label>
             <div class="error"></div>
-          </div>
-          <Button variant="contained" sx={style.btn} onClick={onSubmit}>
-            ADD
-          </Button>
-        
-        </Box>
-         
+          </div> */}
+            <Button variant="contained" sx={style.btn} onClick={onSubmit}>
+              ADD
+            </Button>
+          </Box>
         </Box>
       </AdminDashboard>
     </>
@@ -128,7 +118,6 @@ const style = {
     width: "100%",
     backgroundSize: "cover",
     backgroundImage: `url(${bg})`,
-   
   },
   LoginBox: {
     // height: "50%",

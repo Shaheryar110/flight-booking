@@ -1,28 +1,41 @@
-import React, { useContext, useEffect,useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import ResponsiveDrawer from "../../Components/common/DashboardSidebar";
 import bg from "../../Assets/Images/bg.jpeg";
-import { Box ,Typography,Grid} from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import { userBookFlights } from "../../Services/ReadData";
+import { MdDeleteForever } from "react-icons/md";
 import { theme } from "../../Colors/color";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../../Firebase/Config";
 const Index = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   const [flights, setFlight] = useState();
+  const handleDelete = async (index) => {
+    await deleteDoc(doc(db, "bookFlights", index));
+    fetch();
+  };
+  const fetch = (id) => {
+    userBookFlights(id).then((data) => {
+      setFlight(data);
+    });
+  };
   useEffect(() => {
     if (!currentUser) {
       navigate("/Login");
-    }
-    else{
-        userBookFlights(currentUser.uid).then((data)=>{setFlight(data);})
+    } else {
+      fetch(currentUser.uid);
     }
   }, [currentUser]);
-  useEffect(()=>{console.log(flights)},[flights])
+  useEffect(() => {
+    console.log(flights);
+  }, [flights]);
   return (
     <>
       <ResponsiveDrawer>
-      <Box sx={style.bg}>
+        <Box sx={style.bg}>
           <Typography sx={style.heading}>Booked Flights </Typography>
           {flights &&
             flights?.map((item, index) => {
@@ -33,7 +46,6 @@ const Index = () => {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
-               
               });
 
               // Format time
@@ -60,21 +72,19 @@ const Index = () => {
                   <Grid container spacing={5}>
                     <Grid item lg={4} sm={6} xs={12}>
                       <Typography sx={style.static}>
-                        Air Craft Information
+                        Aircraft Information
                       </Typography>
                       <Box sx={style.flexy}>
-                        <Typography sx={style.info}>Air Craft Name</Typography>
+                        <Typography sx={style.info}>Aircraft Name</Typography>
                         <Typography sx={style.info}>
                           {item?.flightInfo?.aircraft?.name}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
                         <Typography sx={style.info}>
-                          Air Craft Booked Seats
+                          Aircraft Booked Seats
                         </Typography>
-                        <Typography sx={style.info}>
-                          {item?.seats}
-                        </Typography>
+                        <Typography sx={style.info}>{item?.seats}</Typography>
                       </Box>
                     </Grid>
                     <Grid item lg={4} sm={6} xs={12}>
@@ -146,8 +156,16 @@ const Index = () => {
                       </Box>
                     </Grid>
                   </Grid>
-
-                 
+                  <MdDeleteForever
+                    style={{
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                      color: "red",
+                    }}
+                    size={30}
+                    onClick={() => handleDelete(item.id)}
+                  />
                 </Box>
               );
             })}
@@ -159,71 +177,72 @@ const Index = () => {
 
 export default Index;
 const style = {
-    btn: {
-      fontWeight: 600,
-      fontSize: 15,
-      paddingX: "20px",
-      paddingY: "10px",
-      fontFamily: "Poppins",
-      marginTop: "1rem",
-      background: theme.secondary,
-    },
-    flexy: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-    },
-    bg: {
-      position: "relative",
-      display: "flex",
-      flexDirection: "column",
-      height: "100vh",
-      width: "100vw",
-      backgroundSize: "cover",
-      backgroundImage: `url(${bg})`,
-      overflowY: "scroll",
-      paddingX: "1rem",
-    },
-    heading: {
-      color: "white",
-      fontSize: "30px",
-      fontWeight: 700,
-      textAlign: "left",
-      paddingTop: "4rem",
-    },
-    static: {
-      color: "white",
-      fontSize: "20px",
-      fontWeight: 600,
-      textAlign: "center",
-      paddingBottom: "12px",
-    },
-    LoginBox: {
-      // height: "50%",
-      width: "80%",
-      borderRadius: "1rem",
-      padding: "1.3rem",
-      background: "rgba(0, 0, 0, 0.3)",
-      boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.2)",
-      border: "1px solid rgba(255, 255, 255, 0.18)",
-      backdropFilter: "blur(4px)",
-      WebkitBackdropFilter: "blur(4px)",
-      display: "flex",
-      marginY: "12px",
-      flexDirection: "column",
-    },
-    info: {
-      color: "white",
-      fontFamily: "poppins",
-    },
-    waring: {
-      color: "white",
-      fontFamily: "poppins",
-      fontSize: "13px",
-      marginTop: "4px",
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-    },
-  };
+  btn: {
+    fontWeight: 600,
+    fontSize: 15,
+    paddingX: "20px",
+    paddingY: "10px",
+    fontFamily: "Poppins",
+    marginTop: "1rem",
+    background: theme.secondary,
+  },
+  flexy: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  bg: {
+    position: "relative",
+    display: "flex",
+    flexDirection: "column",
+    height: "100vh",
+    width: "100vw",
+    backgroundSize: "cover",
+    backgroundImage: `url(${bg})`,
+    overflowY: "scroll",
+    paddingX: "1rem",
+  },
+  heading: {
+    color: "white",
+    fontSize: "30px",
+    fontWeight: 700,
+    textAlign: "left",
+    paddingTop: "4rem",
+  },
+  static: {
+    color: "white",
+    fontSize: "20px",
+    fontWeight: 600,
+    textAlign: "center",
+    paddingBottom: "12px",
+  },
+  LoginBox: {
+    // height: "50%",
+    width: "80%",
+    borderRadius: "1rem",
+    padding: "1.3rem",
+    background: "rgba(0, 0, 0, 0.3)",
+    boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.2)",
+    border: "1px solid rgba(255, 255, 255, 0.18)",
+    backdropFilter: "blur(4px)",
+    WebkitBackdropFilter: "blur(4px)",
+    display: "flex",
+    marginY: "12px",
+    flexDirection: "column",
+    position: "relative",
+  },
+  info: {
+    color: "white",
+    fontFamily: "poppins",
+  },
+  waring: {
+    color: "white",
+    fontFamily: "poppins",
+    fontSize: "13px",
+    marginTop: "4px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+};

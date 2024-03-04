@@ -6,6 +6,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { updateDoc } from "firebase/firestore";
 import { db } from "../Firebase/Config";
 
 export const getData = async (collName) => {
@@ -35,15 +36,16 @@ export const getSpcecificFlight = async (id) => {
 };
 
 export const userBookFlights = async (id) => {
-  let temp = [];
-  const q = query(collection(db, "bookFlights"), where("userId", "==", id));
+  if (id) {
+    let temp = [];
+    const q = query(collection(db, "bookFlights"), where("userId", "==", id));
 
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    temp.push(doc.data());
-  });
-  return temp;
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      temp.push({ ...doc.data(), id: doc.id });
+    });
+    return temp;
+  }
 };
 
 export const getUserById = async (id) => {
@@ -56,4 +58,11 @@ export const getUserById = async (id) => {
     temp = doc.data();
   });
   return temp;
+};
+export const updateTotalSeats = async (totalSeats, docId) => {
+  const washingtonRef = doc(db, "flights", docId);
+
+  await updateDoc(washingtonRef, {
+    "aircraft.capacity": totalSeats,
+  });
 };

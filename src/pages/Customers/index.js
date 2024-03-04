@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import ResponsiveDrawer from "../../Components/common/DashboardSidebar";
 import bg from "../../Assets/Images/bg.jpeg";
 import { Box, Typography, Grid, Button } from "@mui/material";
-import { getData } from "../../Services/ReadData";
+import { getData, updateTotalSeats } from "../../Services/ReadData";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { theme } from "../../Colors/color";
 import toast from "react-hot-toast";
 import { AddFlightBooking } from "../../Services/AddData";
+import { v4 as uuidv4 } from "uuid";
 const Index = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
@@ -21,14 +22,31 @@ const Index = () => {
     setSeats(updatedSeats);
   };
   const bookFlight = (flightInfo, index, seat) => {
-    if (seat > 12) {
-      toast.error("Cant Select more then 12 seats");
+    if (
+      seat[index] > 12 ||
+      Number(flightInfo.aircraft?.capacity) < seat[index]
+    ) {
+      toast.error("Cant Select more then 12 seats Or Check the total Seats");
     } else {
       let temp = {
         flightInfo,
         seats: seat[index],
         userId: currentUser.uid,
       };
+      const totalSeats = Number(flightInfo.aircraft?.capacity) - seat[index];
+      // console.log(totalSeats, "totalSeats");
+
+      updateTotalSeats(totalSeats, flightInfo.id)
+        .then(() => {
+          // toast.success("Booking Successfull");
+          // setSeats(0);
+          console.log("done");
+          get();
+        })
+        .catch((err) => {
+          // toast.error("Something went wrong!");
+          console.log(err);
+        });
       AddFlightBooking(temp)
         .then(() => {
           toast.success("Booking Successfull");
@@ -39,11 +57,14 @@ const Index = () => {
         });
     }
   };
-  useEffect(() => {
+  const get = () => {
     getData("flights").then((data) => {
       console.log(data);
       setFlight(data);
     });
+  };
+  useEffect(() => {
+    get();
   }, []);
   useEffect(() => {
     if (!currentUser) {
@@ -90,17 +111,17 @@ const Index = () => {
                   <Grid container spacing={5}>
                     <Grid item lg={4} sm={6} xs={12}>
                       <Typography sx={style.static}>
-                        AirCraft Information
+                        Aircraft Information
                       </Typography>
                       <Box sx={style.flexy}>
-                        <Typography sx={style.info}>AirCraft Name</Typography>
+                        <Typography sx={style.info}>Aircraft Name</Typography>
                         <Typography sx={style.info}>
                           {item?.aircraft?.name}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
                         <Typography sx={style.info}>
-                          AirCraft Total Seats
+                          Aircraft Total Seats
                         </Typography>
                         <Typography sx={style.info}>
                           {item?.aircraft?.capacity}

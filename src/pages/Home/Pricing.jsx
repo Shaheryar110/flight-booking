@@ -32,14 +32,6 @@ const Pricing = () => {
       city: "Rome,Italy",
       price: "$19,500",
     },
-    {
-      city: "Paris,France",
-      price: "$22,500",
-    },
-    {
-      city: "Bucharest,Romania",
-      price: "$23,000",
-    },
   ];
 
   const DataLondon = [
@@ -67,6 +59,10 @@ const Pricing = () => {
       city: "Bucharest,Romania",
       price: "$21,000",
     },
+    {
+      city: "Paris,France",
+      price: "$22,500",
+    },
   ];
 
   const DataBerlin = [
@@ -89,6 +85,14 @@ const Pricing = () => {
     {
       city: "Bucharest,Romania",
       price: "$18,000",
+    },
+    {
+      city: "Bucharest,Romania",
+      price: "$23,000",
+    },
+    {
+      city: "Barcelona,Spain",
+      price: "$19,500",
     },
   ];
   return (

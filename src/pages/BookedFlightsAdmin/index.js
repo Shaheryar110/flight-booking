@@ -7,25 +7,33 @@ import { Box, Typography, Grid } from "@mui/material";
 import { getData, getUserById, userBookFlights } from "../../Services/ReadData";
 import { theme } from "../../Colors/color";
 import AdminDashboard from "../../Components/common/AdminDashboard";
+import { MdDeleteForever } from "react-icons/md";
+import { db } from "../../Firebase/Config";
+import { deleteDoc, doc } from "@firebase/firestore";
 const Index = () => {
   const [flights, setFlight] = useState();
-  useEffect(() => {
+  const handleDelete = async (index) => {
+    await deleteDoc(doc(db, "bookFlights", index));
+    get();
+  };
+  const get = () => {
     getData("bookFlights").then((data) => {
       setFlight(data);
-      console.log(data);
     });
-  }, []);
+  };
   useEffect(() => {
-    const fetchUsers = async () => {
-      const updatedFlights = await Promise.all(
-        flights.map(async (item) => {
-          const user = await getUserById(item.userId);
-          return { ...item, user };
-        })
-      );
-      console.log(updatedFlights);
-      setFlight(updatedFlights);
-    };
+    get();
+  }, []);
+  const fetchUsers = async () => {
+    const updatedFlights = await Promise.all(
+      flights?.map(async (item) => {
+        const user = await getUserById(item?.userId);
+        return { ...item, user };
+      })
+    );
+    setFlight(updatedFlights);
+  };
+  useEffect(() => {
     if (flights?.length > 0) {
       fetchUsers();
     }
@@ -38,7 +46,7 @@ const Index = () => {
           {flights &&
             flights?.length > 0 &&
             flights?.map((item, index) => {
-              const dateTimeA = new Date(item.flightInfo.arrivalTimeDate);
+              const dateTimeA = new Date(item?.flightInfo?.arrivalTimeDate);
 
               // Format date
               const formattedDateA = dateTimeA.toLocaleDateString("en-US", {
@@ -52,7 +60,7 @@ const Index = () => {
                 hour: "2-digit",
                 minute: "2-digit",
               });
-              const dateTimeD = new Date(item.flightInfo.departureTimeDate);
+              const dateTimeD = new Date(item?.flightInfo?.departureTimeDate);
 
               // Format date
               const formattedDateD = dateTimeD.toLocaleDateString("en-US", {
@@ -76,17 +84,17 @@ const Index = () => {
                   <Grid container spacing={5}>
                     <Grid item lg={4} sm={6} xs={12}>
                       <Typography sx={style.static}>
-                        Air Craft Information
+                        Aircraft Information
                       </Typography>
                       <Box sx={style.flexy}>
-                        <Typography sx={style.info}>Air Craft Name</Typography>
+                        <Typography sx={style.info}>Aircraft Name</Typography>
                         <Typography sx={style.info}>
                           {item?.flightInfo?.aircraft?.name}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
                         <Typography sx={style.info}>
-                          Air Craft Booked Seats
+                          Aircraft Booked Seats
                         </Typography>
                         <Typography sx={style.info}>{item?.seats}</Typography>
                       </Box>
@@ -108,7 +116,6 @@ const Index = () => {
                           Arrival Airport Location
                         </Typography>
                         <Typography sx={style.info}>
-                          {item?.flightInfo?.arrivalAirport?.city} /{" "}
                           {item?.flightInfo?.arrivalAirport?.country}
                         </Typography>
                       </Box>
@@ -134,7 +141,7 @@ const Index = () => {
                           Departure Airport Name
                         </Typography>
                         <Typography sx={style.info}>
-                          {item?.flightInfo.departureAirport?.name}
+                          {item?.flightInfo?.departureAirport?.name}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
@@ -142,8 +149,7 @@ const Index = () => {
                           Departure Airport Location
                         </Typography>
                         <Typography sx={style.info}>
-                          {item?.flightInfo.departureAirport?.city} /{" "}
-                          {item?.flightInfo.departureAirport?.country}
+                          {item?.flightInfo?.departureAirport?.country}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
@@ -177,6 +183,16 @@ const Index = () => {
                       </Box>
                     </Grid>
                   </Grid>
+                  <MdDeleteForever
+                    style={{
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                      color: "red",
+                    }}
+                    size={30}
+                    onClick={() => handleDelete(item.id)}
+                  />
                 </Box>
               );
             })}
@@ -241,6 +257,7 @@ const style = {
     display: "flex",
     marginY: "12px",
     flexDirection: "column",
+    position: "relative",
   },
   info: {
     color: "white",

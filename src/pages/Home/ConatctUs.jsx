@@ -6,13 +6,42 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import DeckIcon from "@mui/icons-material/Deck";
 import { theme } from "../../Colors/color";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MarkunreadIcon from "@mui/icons-material/Markunread";
-
+import toast from "react-hot-toast";
+import { AddContactForm } from "../../Services/AddData";
+const initial = {
+  name: "",
+  address: "",
+  subject: "",
+  message: "",
+};
 const ConatctUs = () => {
+  const [form, setForm] = useState(initial);
+  const onChange = (key, val) => {
+    setForm((prev) => ({
+      ...prev,
+      [key]: val,
+    }));
+  };
+  const onSubmit = () => {
+    const { name, address, message, subject } = form;
+    if (name !== "" && address !== "" && message !== "" && subject !== "") {
+      AddContactForm(form)
+        .then(() => {
+          toast.success("Form Added");
+          setForm(initial);
+        })
+        .catch((err) => {
+          toast.error("Something went Wrong");
+        });
+    } else {
+      toast.error("Please Fill All Feilds");
+    }
+  };
   return (
     <>
       <Box sx={style.paret} data-aos="fade-up" data-aos-duration="1000">
@@ -64,16 +93,22 @@ const ConatctUs = () => {
                 label="Enter Your Name"
                 variant="outlined"
                 sx={{ marginBottom: "15px", width: "100%" }}
+                value={form.name}
+                onChange={(e) => onChange("name", e.target.value)}
               />
               <TextField
                 label="Enter Your Address"
                 variant="outlined"
                 sx={{ marginBottom: "15px", width: "100%" }}
+                value={form.address}
+                onChange={(e) => onChange("address", e.target.value)}
               />
               <TextField
                 label="Enter Your Subject"
                 variant="outlined"
                 sx={{ marginBottom: "15px", width: "100%" }}
+                value={form.subject}
+                onChange={(e) => onChange("subject", e.target.value)}
               />
             </Grid>
             <Grid
@@ -93,8 +128,10 @@ const ConatctUs = () => {
                 rows={7}
                 defaultValue="Enter Message"
                 style={{ width: "100%" }}
+                value={form.message}
+                onChange={(e) => onChange("message", e.target.value)}
               />
-              <Button variant="contained" sx={style.btn}>
+              <Button variant="contained" sx={style.btn} onClick={onSubmit}>
                 SEND MESSAGE
               </Button>
             </Grid>
