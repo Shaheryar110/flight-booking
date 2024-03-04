@@ -3,7 +3,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import ResponsiveDrawer from "../../Components/common/DashboardSidebar";
 import bg from "../../Assets/Images/bg.jpeg";
-import { Box, Typography, Grid,Button } from "@mui/material";
+import { Box, Typography, Grid, Button } from "@mui/material";
 import { getData } from "../../Services/ReadData";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { theme } from "../../Colors/color";
@@ -20,24 +20,25 @@ const Index = () => {
     updatedSeats[index] = value;
     setSeats(updatedSeats);
   };
-  const bookFlight = (flightInfo,index,seat) =>{
-    if(seat > 12){
+  const bookFlight = (flightInfo, index, seat) => {
+    if (seat > 12) {
       toast.error("Cant Select more then 12 seats");
-    }else{
+    } else {
       let temp = {
         flightInfo,
-        seats:seat[index],
-        userId:currentUser.uid
+        seats: seat[index],
+        userId: currentUser.uid,
       };
-      AddFlightBooking(temp).then(()=>{
-        toast.success("Booking Successfull");
-        setSeats(0)
-      }).catch((err)=>{
-        toast.error("Something went wrong!");
-      })
+      AddFlightBooking(temp)
+        .then(() => {
+          toast.success("Booking Successfull");
+          setSeats(0);
+        })
+        .catch((err) => {
+          toast.error("Something went wrong!");
+        });
     }
-
-  }
+  };
   useEffect(() => {
     getData("flights").then((data) => {
       console.log(data);
@@ -63,7 +64,6 @@ const Index = () => {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
-              
               });
 
               // Format time
@@ -90,17 +90,17 @@ const Index = () => {
                   <Grid container spacing={5}>
                     <Grid item lg={4} sm={6} xs={12}>
                       <Typography sx={style.static}>
-                        Air Craft Information
+                        AirCraft Information
                       </Typography>
                       <Box sx={style.flexy}>
-                        <Typography sx={style.info}>Air Craft Name</Typography>
+                        <Typography sx={style.info}>AirCraft Name</Typography>
                         <Typography sx={style.info}>
                           {item?.aircraft?.name}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
                         <Typography sx={style.info}>
-                          Air Craft Total Seats
+                          AirCraft Total Seats
                         </Typography>
                         <Typography sx={style.info}>
                           {item?.aircraft?.capacity}
@@ -177,26 +177,42 @@ const Index = () => {
                     </Grid>
                   </Grid>
 
-                  <Box sx={{ width: "50%", marginTop: "10px",display:"flex",flexDirection:"row",alignItems:"start",justifyContent:"start",gap :"12px"}}>
+                  <Box
+                    sx={{
+                      width: "50%",
+                      marginTop: "10px",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "start",
+                      justifyContent: "start",
+                      gap: "12px",
+                    }}
+                  >
                     <Box>
-                    <input
-                      className="input"
-                      type="number"
-                      name="name"
-                      id="name"
-                      placeholder=" maximum 12 seats"
-                      value={seats[index]}
-                        onChange={(e)=>handleSeatChange(index, e.target.value)}
-                      required
-                    />
-                    <Typography sx={style.waring}>
-                      <RiErrorWarningFill style={{ color: "white" }} /> One
-                      person allowed 12 seats to book at once
-                    </Typography>
+                      <input
+                        className="input"
+                        type="number"
+                        name="name"
+                        id="name"
+                        placeholder=" maximum 12 seats"
+                        value={seats[index]}
+                        onChange={(e) =>
+                          handleSeatChange(index, e.target.value)
+                        }
+                        required
+                      />
+                      <Typography sx={style.waring}>
+                        <RiErrorWarningFill style={{ color: "white" }} /> One
+                        person allowed 12 seats to book at once
+                      </Typography>
                     </Box>
-                    <Button variant="contained" sx={style.btn} onClick={()=>bookFlight(item,index,seats)} >
-            Book Now  
-          </Button>
+                    <Button
+                      variant="contained"
+                      sx={style.btn}
+                      onClick={() => bookFlight(item, index, seats)}
+                    >
+                      Book Now
+                    </Button>
                   </Box>
                 </Box>
               );

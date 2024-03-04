@@ -48,7 +48,7 @@ const Footer = () => {
               <Typography sx={style.desc}>Customer</Typography>
               <Typography sx={style.desc}>Admin</Typography>
             </Grid>
-            <Grid item lg={3} xs={12}>
+            {/* <Grid item lg={3} xs={12}>
               <Typography sx={style.heads}>INSTAFEED</Typography>
               <Grid container sx={{ width: "100%" }} spacing={2}>
                 <Grid item lg={3}>
@@ -132,7 +132,7 @@ const Footer = () => {
                   />
                 </Grid>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Grid>
           <hr />
           <Box sx={style.copright}>

@@ -40,17 +40,14 @@ const SignUp = () => {
       toast.error("Fill All Fields");
       return;
     }
-    if (
-     
-      password.length > 8 && !capitalLetterRegex.test(password)
-    ) {
+    if (password.length > 8 && !capitalLetterRegex.test(password)) {
       toast.error("Password must include Capital Letter");
       return;
     }
 
     if (
       !emailPattern.test(email) ||
-      password !== confirmPassword || 
+      password !== confirmPassword ||
       confirmPassword.length < 8
     ) {
       toast.error("Validation Error");
@@ -90,7 +87,7 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-         
+
           <div class="section">
             <input
               className="input"
@@ -107,7 +104,7 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-         
+
           <div class="section">
             <input
               className="input"
@@ -124,7 +121,7 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-        
+
           <div class="section">
             <input
               className="input"
@@ -141,7 +138,7 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-         
+
           <div class="section">
             <input
               className="input"
@@ -160,9 +157,9 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-        
+
           <Button variant="contained" sx={style.btn} onClick={onSubmit}>
-            LOG IN
+            Register
           </Button>
           <Typography sx={style.slogan}>
             Already have an account?
@@ -170,14 +167,13 @@ const SignUp = () => {
               to={"/Login"}
               style={{ textDecoration: "none", color: theme.secondary }}
             >
-              Register
+              Login
             </Link>
           </Typography>
-          <Link  to={"/"}
-                style={{ textDecoration: "none", color: "inherit" }}>
-          <Button variant="contained" sx={style.btn} >
-            Back to Home page 
-          </Button>
+          <Link to={"/"} style={{ textDecoration: "none", color: "inherit" }}>
+            <Button variant="contained" sx={style.btn}>
+              Back to Home page
+            </Button>
           </Link>
         </Box>
       </Box>

@@ -96,7 +96,7 @@ const Header = () => {
                 to={"/Aircrafts"}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                Admin
+                Administrator
               </Link>
             </Typography>
             {/* {user ? (

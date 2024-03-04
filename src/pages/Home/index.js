@@ -48,14 +48,14 @@ const Index = () => {
               confused at the difference in price. You may see some for as low
               as $.17 each.
             </Typography>
-            <Button
+            {/* <Button
               data-aos="fade-right"
               data-aos-offset="200"
               variant="contained"
               sx={style.btn}
             >
               GET STARTED
-            </Button>
+            </Button> */}
           </Box>
         </Container>
       </Box>
