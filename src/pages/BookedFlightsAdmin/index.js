@@ -1,69 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect,useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import ResponsiveDrawer from "../../Components/common/DashboardSidebar";
 import bg from "../../Assets/Images/bg.jpeg";
-import { Box, Typography, Grid,Button } from "@mui/material";
-import { getData } from "../../Services/ReadData";
-import { RiErrorWarningFill } from "react-icons/ri";
+import { Box ,Typography,Grid} from "@mui/material";
+import { getData, userBookFlights } from "../../Services/ReadData";
 import { theme } from "../../Colors/color";
-import toast from "react-hot-toast";
-import { AddFlightBooking } from "../../Services/AddData";
+import AdminDashboard from "../../Components/common/AdminDashboard";
 const Index = () => {
-  const navigate = useNavigate();
-  const { currentUser } = useContext(AuthContext);
   const [flights, setFlight] = useState();
-  const [seats, setSeats] = useState([]);
-
-  const handleSeatChange = (index, value) => {
-    const updatedSeats = [...seats];
-    updatedSeats[index] = value;
-    setSeats(updatedSeats);
-  };
-  const bookFlight = (flightInfo,index,seat) =>{
-    if(seat > 12){
-      toast.error("Cant Select more then 12 seats");
-    }else{
-      let temp = {
-        flightInfo,
-        seats:seat[index],
-        userId:currentUser.uid
-      };
-      AddFlightBooking(temp).then(()=>{
-        toast.success("Booking Successfull");
-        setSeats(0)
-      }).catch((err)=>{
-        toast.error("Something went wrong!");
-      })
-    }
-
-  }
   useEffect(() => {
-    getData("flights").then((data) => {
-      console.log(data);
-      setFlight(data);
-    });
+    
+        getData("bookFlights").then((data)=>{setFlight(data);console.log(data);})
+    
   }, []);
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/Login");
-    }
-  }, [currentUser]);
+  useEffect(()=>{console.log(flights)},[flights])
   return (
     <>
-      <ResponsiveDrawer>
-        <Box sx={style.bg}>
-          <Typography sx={style.heading}>Flights Information</Typography>
+      <AdminDashboard>
+      <Box sx={style.bg}>
+          <Typography sx={style.heading}>Booked Flights </Typography>
           {flights &&
             flights?.map((item, index) => {
-              const dateTimeA = new Date(item.arrivalTimeDate);
+              const dateTimeA = new Date(item.flightInfo.arrivalTimeDate);
 
               // Format date
               const formattedDateA = dateTimeA.toLocaleDateString("en-US", {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",
-              
+               
               });
 
               // Format time
@@ -71,7 +37,7 @@ const Index = () => {
                 hour: "2-digit",
                 minute: "2-digit",
               });
-              const dateTimeD = new Date(item.departureTimeDate);
+              const dateTimeD = new Date(item.flightInfo.departureTimeDate);
 
               // Format date
               const formattedDateD = dateTimeD.toLocaleDateString("en-US", {
@@ -95,15 +61,15 @@ const Index = () => {
                       <Box sx={style.flexy}>
                         <Typography sx={style.info}>Air Craft Name</Typography>
                         <Typography sx={style.info}>
-                          {item?.aircraft?.name}
+                          {item?.flightInfo?.aircraft?.name}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
                         <Typography sx={style.info}>
-                          Air Craft Total Seats
+                          Air Craft Booked Seats
                         </Typography>
                         <Typography sx={style.info}>
-                          {item?.aircraft?.capacity}
+                          {item?.seats}
                         </Typography>
                       </Box>
                     </Grid>
@@ -116,7 +82,7 @@ const Index = () => {
                           Arrival Airport Name
                         </Typography>
                         <Typography sx={style.info}>
-                          {item?.arrivalAirport?.name}
+                          {item?.flightInfo?.arrivalAirport?.name}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
@@ -124,8 +90,8 @@ const Index = () => {
                           Arrival Airport Location
                         </Typography>
                         <Typography sx={style.info}>
-                          {item?.arrivalAirport?.city} /{" "}
-                          {item?.arrivalAirport?.country}
+                          {item?.flightInfo?.arrivalAirport?.city} /{" "}
+                          {item?.flightInfo?.arrivalAirport?.country}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
@@ -150,7 +116,7 @@ const Index = () => {
                           Departure Airport Name
                         </Typography>
                         <Typography sx={style.info}>
-                          {item?.departureAirport?.name}
+                          {item?.flightInfo.departureAirport?.name}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
@@ -158,8 +124,8 @@ const Index = () => {
                           Departure Airport Location
                         </Typography>
                         <Typography sx={style.info}>
-                          {item?.departureAirport?.city} /{" "}
-                          {item?.departureAirport?.country}
+                          {item?.flightInfo.departureAirport?.city} /{" "}
+                          {item?.flightInfo.departureAirport?.country}
                         </Typography>
                       </Box>
                       <Box sx={style.flexy}>
@@ -175,105 +141,90 @@ const Index = () => {
                         </Typography>
                       </Box>
                     </Grid>
+                    <Grid item lg={4} sm={6} xs={12}>
+                    <Typography sx={style.static}>
+                        User Information
+                      </Typography>
+                    </Grid>
                   </Grid>
 
-                  <Box sx={{ width: "50%", marginTop: "10px",display:"flex",flexDirection:"row",alignItems:"start",justifyContent:"start",gap :"12px"}}>
-                    <Box>
-                    <input
-                      className="input"
-                      type="number"
-                      name="name"
-                      id="name"
-                      placeholder=" maximum 12 seats"
-                      value={seats[index]}
-                        onChange={(e)=>handleSeatChange(index, e.target.value)}
-                      required
-                    />
-                    <Typography sx={style.waring}>
-                      <RiErrorWarningFill style={{ color: "white" }} /> One
-                      person allowed 12 seats to book at once
-                    </Typography>
-                    </Box>
-                    <Button variant="contained" sx={style.btn} onClick={()=>bookFlight(item,index,seats)} >
-            Book Now  
-          </Button>
-                  </Box>
+                 
                 </Box>
               );
             })}
         </Box>
-      </ResponsiveDrawer>
+      </AdminDashboard>
     </>
   );
 };
 
 export default Index;
 const style = {
-  btn: {
-    fontWeight: 600,
-    fontSize: 15,
-    paddingX: "20px",
-    paddingY: "10px",
-    fontFamily: "Poppins",
-    marginTop: "1rem",
-    background: theme.secondary,
-  },
-  flexy: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  bg: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh",
-    width: "100vw",
-    backgroundSize: "cover",
-    backgroundImage: `url(${bg})`,
-    overflowY: "scroll",
-    paddingX: "1rem",
-  },
-  heading: {
-    color: "white",
-    fontSize: "30px",
-    fontWeight: 700,
-    textAlign: "left",
-    paddingTop: "4rem",
-  },
-  static: {
-    color: "white",
-    fontSize: "20px",
-    fontWeight: 600,
-    textAlign: "center",
-    paddingBottom: "12px",
-  },
-  LoginBox: {
-    // height: "50%",
-    width: "80%",
-    borderRadius: "1rem",
-    padding: "1.3rem",
-    background: "rgba(0, 0, 0, 0.3)",
-    boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.2)",
-    border: "1px solid rgba(255, 255, 255, 0.18)",
-    backdropFilter: "blur(4px)",
-    WebkitBackdropFilter: "blur(4px)",
-    display: "flex",
-    marginY: "12px",
-    flexDirection: "column",
-  },
-  info: {
-    color: "white",
-    fontFamily: "poppins",
-  },
-  waring: {
-    color: "white",
-    fontFamily: "poppins",
-    fontSize: "13px",
-    marginTop: "4px",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-};
+    btn: {
+      fontWeight: 600,
+      fontSize: 15,
+      paddingX: "20px",
+      paddingY: "10px",
+      fontFamily: "Poppins",
+      marginTop: "1rem",
+      background: theme.secondary,
+    },
+    flexy: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    bg: {
+      position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      height: "100vh",
+      width: "100vw",
+      backgroundSize: "cover",
+      backgroundImage: `url(${bg})`,
+      overflowY: "scroll",
+      paddingX: "1rem",
+    },
+    heading: {
+      color: "white",
+      fontSize: "30px",
+      fontWeight: 700,
+      textAlign: "left",
+      paddingTop: "4rem",
+    },
+    static: {
+      color: "white",
+      fontSize: "20px",
+      fontWeight: 600,
+      textAlign: "center",
+      paddingBottom: "12px",
+    },
+    LoginBox: {
+      // height: "50%",
+      width: "80%",
+      borderRadius: "1rem",
+      padding: "1.3rem",
+      background: "rgba(0, 0, 0, 0.3)",
+      boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.2)",
+      border: "1px solid rgba(255, 255, 255, 0.18)",
+      backdropFilter: "blur(4px)",
+      WebkitBackdropFilter: "blur(4px)",
+      display: "flex",
+      marginY: "12px",
+      flexDirection: "column",
+    },
+    info: {
+      color: "white",
+      fontFamily: "poppins",
+    },
+    waring: {
+      color: "white",
+      fontFamily: "poppins",
+      fontSize: "13px",
+      marginTop: "4px",
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+    },
+  };

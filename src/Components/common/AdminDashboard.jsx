@@ -67,6 +67,11 @@ function AdminDashboard({ children }) {
       icon: <MdAddCircleOutline />,
     },
     {
+      name: "View Booked Flights",
+      link: "/book-flights-admin",
+      icon: <MdAddCircleOutline />,
+    },
+    {
       name: "View Flights",
       link: "/ViewFlights",
       icon: <GrView />,

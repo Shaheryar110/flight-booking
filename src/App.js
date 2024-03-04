@@ -5,6 +5,7 @@ import Airports from "../src/pages/Airports";
 import Aircrafts from "../src/pages/Aircrafts";
 import ViewFlights from "../src/pages/ViewFlights";
 import AddFlights from "../src/pages/AddFlights";
+import BookedFlightsAdmin from "../src/pages/BookedFlightsAdmin";
 
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
@@ -38,6 +39,7 @@ function App() {
         <Route path="/Airports" element={protectedRoute(<Airports />)} />
         <Route path="/AddFlights" element={protectedRoute(<AddFlights />)} />
         <Route path="/ViewFlights" element={protectedRoute(<ViewFlights />)} />
+        <Route path="/book-flights-admin" element={protectedRoute(<BookedFlightsAdmin />)} />
         <Route path="/book-flights" element={<BookedFlights />} />
       </Routes>
       <Toaster />

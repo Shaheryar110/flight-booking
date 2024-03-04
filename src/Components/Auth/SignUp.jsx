@@ -59,7 +59,7 @@ const SignUp = () => {
         const { res } = await SignUpFirebase(formData);
         if (res === true) {
           toast.success("Signup Successful");
-          navigate("/");
+          navigate("/Customers");
         } else if (res === false) {
           toast.error("Already Registered");
         }
@@ -90,17 +90,7 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-          {/* <TextField
-            label="Enter Your Full Name"
-            variant="outlined"
-            value={formData.name}
-            onChange={(e) => handleOnChange("name", e.target.value)}
-            sx={{
-              marginBottom: "15px",
-              width: "100%",
-              background: "transparent",
-            }}
-          /> */}
+         
           <div class="section">
             <input
               className="input"
@@ -117,17 +107,7 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-          {/* <TextField
-            label="Enter Your Email"
-            variant="outlined"
-            value={formData.email}
-            onChange={(e) => handleOnChange("email", e.target.value)}
-            sx={{
-              marginBottom: "15px",
-              width: "100%",
-              background: "transparent",
-            }}
-          /> */}
+         
           <div class="section">
             <input
               className="input"
@@ -144,17 +124,7 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-          {/* <TextField
-            label="Enter Your Phone"
-            variant="outlined"
-            value={formData.phone}
-            onChange={(e) => handleOnChange("phone", e.target.value)}
-            sx={{
-              marginBottom: "15px",
-              width: "100%",
-              background: "transparent",
-            }}
-          /> */}
+        
           <div class="section">
             <input
               className="input"
@@ -171,14 +141,7 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-          {/* <TextField
-            label="Enter Your Password"
-            type="password"
-            value={formData.password}
-            onChange={(e) => handleOnChange("password", e.target.value)}
-            variant="outlined"
-            sx={{ marginBottom: "15px", width: "100%" }}
-          /> */}
+         
           <div class="section">
             <input
               className="input"
@@ -197,14 +160,7 @@ const SignUp = () => {
             </label>
             <div class="error"></div>
           </div>
-          {/* <TextField
-            label="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={(e) => handleOnChange("confirmPassword", e.target.value)}
-            type="password"
-            variant="outlined"
-            sx={{ marginBottom: "15px", width: "100%" }}
-          /> */}
+        
           <Button variant="contained" sx={style.btn} onClick={onSubmit}>
             LOG IN
           </Button>

@@ -30,9 +30,10 @@ const Index = () => {
 
               // Format date
               const formattedDateA = dateTimeA.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "2-digit",
                 day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+               
               });
 
               // Format time
@@ -44,9 +45,9 @@ const Index = () => {
 
               // Format date
               const formattedDateD = dateTimeD.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "2-digit",
                 day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
               });
 
               // Format time

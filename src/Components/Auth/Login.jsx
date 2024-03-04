@@ -43,7 +43,7 @@ const Login = ({ admin }) => {
       const response = await LoginFirebase(formData);
       if (response.success === true) {
         toast.success("Login Successfull");
-        navigate("/");
+        navigate("/Customers");
       } else if (response.success === false) {
         toast.error("Invalid Credentials");
       }
@@ -94,7 +94,7 @@ const Login = ({ admin }) => {
             LOG IN
           </Button>
         { !admin && <Typography sx={style.slogan}>
-            Did'nt have an account?
+            Don't have an account?
             <Link
               to={"/SignUp"}
               style={{ textDecoration: "none", color: theme.secondary }}
