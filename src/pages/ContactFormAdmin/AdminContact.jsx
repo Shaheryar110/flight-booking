@@ -25,6 +25,9 @@ const Index = () => {
   useEffect(() => {
     get();
   }, []);
+  useEffect(() => {
+    console.log(flights, "flights");
+  }, [flights]);
 
   return (
     <>
@@ -33,11 +36,27 @@ const Index = () => {
           <Typography sx={style.heading}>Contact Forms </Typography>
           <Grid container spacing={3}>
             {flights &&
-              flights?.length > 0 &&
               flights?.map((item, index) => {
+                console.log(item, "item");
                 return (
-                  <Grid item lg={4}>
+                  <Grid item lg={4} key={index}>
                     <Box sx={style.LoginBox} key={index}>
+                      <Box sx={style.flexy}>
+                        <Typography sx={style.info}> Name</Typography>
+                        <Typography sx={style.info}>{item?.name}</Typography>
+                      </Box>
+                      <Box sx={style.flexy}>
+                        <Typography sx={style.info}> Subject</Typography>
+                        <Typography sx={style.info}>{item?.subject}</Typography>
+                      </Box>
+                      <Box sx={style.flexy}>
+                        <Typography sx={style.info}> Message</Typography>
+                        <Typography sx={style.info}>{item?.message}</Typography>
+                      </Box>
+                      <Box sx={style.flexy}>
+                        <Typography sx={style.info}> Address</Typography>
+                        <Typography sx={style.info}>{item?.address}</Typography>
+                      </Box>
                       {/* <MdDeleteForever
                     style={{
                       position: "absolute",
