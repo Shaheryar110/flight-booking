@@ -3,42 +3,92 @@ import React from "react";
 import { theme } from "../../Colors/color";
 
 const Pricing = () => {
-  const Data = [
+  const DataIstanbul = [
     {
-      city: "New York",
-      price: "$1500",
+      city: "Moscow,Russia",
+      price: "$17,500",
     },
     {
-      city: "Maldives",
-      price: "$1500",
+      city: "London,UK",
+      price: "$21,500",
     },
     {
-      city: "Sri Lanka",
-      price: "$1500",
+      city: "Saint Peterburg,Russia",
+      price: "$18,000",
     },
     {
-      city: "Nepal",
-      price: "$1500",
+      city: "Berlin,Germany",
+      price: "$20,000",
     },
     {
-      city: "Sinagpore",
-      price: "$1500",
+      city: "Madraid,Spain",
+      price: "$22,000",
     },
     {
-      city: "Thailand",
-      price: "$1500",
+      city: "Barcelona,Spain",
+      price: "$22,500",
     },
     {
-      city: "Nepal",
-      price: "$1500",
+      city: "Rome,Italy",
+      price: "$19,500",
     },
     {
-      city: "Sinagpore",
-      price: "$1500",
+      city: "Paris,France",
+      price: "$22,500",
     },
     {
-      city: "Thailand",
-      price: "$1500",
+      city: "Bucharest,Romania",
+      price: "$23,000",
+    },
+  ];
+
+  const DataLondon = [
+    {
+      city: "Berlin,Germany",
+      price: "$18,000",
+    },
+    {
+      city: "Madraid,Spain",
+      price: "$19,000",
+    },
+    {
+      city: "Barcelona,Spain",
+      price: "$19,500",
+    },
+    {
+      city: "Rome,Italy",
+      price: "$20,000",
+    },
+    {
+      city: "Paris,France",
+      price: "$17,500",
+    },
+    {
+      city: "Bucharest,Romania",
+      price: "$21,000",
+    },
+  ];
+
+  const DataBerlin = [
+    {
+      city: "Madraid,Spain",
+      price: "$16,500",
+    },
+    {
+      city: "Barcelona,Spain",
+      price: "$17,00",
+    },
+    {
+      city: "Rome,Italy",
+      price: "$15,500",
+    },
+    {
+      city: "Paris,France",
+      price: "$14,500",
+    },
+    {
+      city: "Bucharest,Romania",
+      price: "$18,000",
     },
   ];
   return (
@@ -58,8 +108,8 @@ const Pricing = () => {
           sx={{ marginTop: "4rem", display: "flex", justifyContent: "center" }}
         >
           <Grid item lg={4} md={6} xs={12} data-aos="zoom-in">
-            <Typography sx={style.pkgHeading}>Cheap Pakages</Typography>
-            {Data.map((ite, index) => {
+            <Typography sx={style.pkgHeading}>From Istanbul Fly To</Typography>
+            {DataIstanbul.map((ite, index) => {
               return (
                 <>
                   <Box sx={style.flexBox} key={index}>
@@ -87,8 +137,8 @@ const Pricing = () => {
             })}
           </Grid>
           <Grid item lg={4} md={6} xs={12} data-aos="zoom-in">
-            <Typography sx={style.pkgHeading}>Luxury Pakages</Typography>
-            {Data.map((ite, index) => {
+            <Typography sx={style.pkgHeading}>From London Fly To</Typography>
+            {DataLondon.map((ite, index) => {
               return (
                 <>
                   <Box sx={style.flexBox} key={index}>
@@ -116,8 +166,8 @@ const Pricing = () => {
             })}
           </Grid>
           <Grid item lg={4} md={6} xs={12} data-aos="zoom-in">
-            <Typography sx={style.pkgHeading}>Camping Pakages</Typography>
-            {Data.map((ite, index) => {
+            <Typography sx={style.pkgHeading}>From Berlin Fly To</Typography>
+            {DataBerlin.map((ite, index) => {
               return (
                 <>
                   <Box sx={style.flexBox} key={index}>
