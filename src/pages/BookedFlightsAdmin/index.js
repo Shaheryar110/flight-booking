@@ -9,12 +9,20 @@ import { theme } from "../../Colors/color";
 import AdminDashboard from "../../Components/common/AdminDashboard";
 import { MdDeleteForever } from "react-icons/md";
 import { db } from "../../Firebase/Config";
-import { deleteDoc, doc } from "@firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "@firebase/firestore";
 const Index = () => {
   const [flights, setFlight] = useState();
-  const handleDelete = async (index) => {
-    await deleteDoc(doc(db, "bookFlights", index));
-    get();
+  const handleDelete = async (index, flightId, seats) => {
+    const collRef = doc(db, "flights", flightId);
+
+    try {
+      const docData = (await getDoc(collRef)).data();
+      await updateDoc(collRef, {
+        "aircraft.capacity": Number(docData.aircraft.capacity) + Number(seats),
+      });
+      await deleteDoc(doc(db, "bookFlights", index));
+      get();
+    } catch (error) {}
   };
   const get = () => {
     getData("bookFlights").then((data) => {
@@ -191,7 +199,9 @@ const Index = () => {
                       color: "red",
                     }}
                     size={30}
-                    onClick={() => handleDelete(item.id)}
+                    onClick={() =>
+                      handleDelete(item.id, item.flightInfo.id, item.seats)
+                    }
                   />
                 </Box>
               );
