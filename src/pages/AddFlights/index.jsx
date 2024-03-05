@@ -88,7 +88,6 @@ const Index = () => {
       console.log(airportData, "airportData");
       setAirport(airportData);
       const aircraftData = await getData("aircrafts");
-      console.log(aircraftData, "aircraftData");
       setAircraft(aircraftData);
     } catch (error) {
       console.log("error", error);
