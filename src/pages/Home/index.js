@@ -44,9 +44,19 @@ const Index = () => {
               data-aos="fade-right"
               data-aos-offset="200"
             >
-              If you are looking at blank cassettes on the web, you may be very
-              confused at the difference in price. You may see some for as low
-              as $.17 each.
+              Introducing Skystream Charters, the best option for private jet
+              sharing that combines unmatched service, efficiency, and elegance.
+              At Skystream Charters, we're committed to providing a first-rate,
+              accessible, and exclusive air travel experience. Our fleet of
+              cutting-edge aircraft is designed to meet the diverse needs of our
+              discriminating customers by providing a smooth blend of privacy,
+              speed, and luxury. Our versatile jet sharing approach guarantees
+              that you may take advantage of the advantages of private jet
+              travel at a fraction of the price, whether you're flying for
+              business, pleasure, or anything in between. Come along with us as
+              we reinvent the sky with our dedication to quality, security, and
+              individualized service. Welcome to Skystream Charters, a place
+              where travel goes beyond the typical.
             </Typography>
             {/* <Button
               data-aos="fade-right"

@@ -1,7 +1,7 @@
 import { Box, Container, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import { theme } from "../../Colors/color";
-import logo from "../../Assets/Images/logo.png";
+import logo from "../../Assets/Images/logo.jpg";
 import one from "../../Assets/Images/1.jpg";
 import two from "../../Assets/Images/2.jpg";
 import three from "../../Assets/Images/3.jpg";
@@ -26,20 +26,30 @@ const Footer = () => {
                 alignItems: "center",
               }}
             >
-              {/* <img src={logo} style={{ width: "250px", height: "60px" }} /> */}
-              <Typography
+              <img src={logo} style={{ width: "150px", height: "150px" }} />
+              {/* <Typography
                 sx={{ color: "white", fontSize: "30px", fontWeight: 600 }}
               >
                 LOGO
-              </Typography>
+              </Typography> */}
             </Grid>
-            <Grid item lg={3}>
+            <Grid item lg={6}>
               <Typography sx={style.heads}>ABOUT TRAVELISTA</Typography>
               <Typography sx={style.desc}>
-                The world has become so fast paced that people don’t want to
-                stand by reading a page of information, they would much rather
-                look at a presentation and understand the message. It has come
-                to a point
+                Introducing Skystream Charters, the best option for private jet
+                sharing that combines unmatched service, efficiency, and
+                elegance. At Skystream Charters, we're committed to providing a
+                first-rate, accessible, and exclusive air travel experience. Our
+                fleet of cutting-edge aircraft is designed to meet the diverse
+                needs of our discriminating customers by providing a smooth
+                blend of privacy, speed, and luxury. Our versatile jet sharing
+                approach guarantees that you may take advantage of the
+                advantages of private jet travel at a fraction of the price,
+                whether you're flying for business, pleasure, or anything in
+                between. Come along with us as we reinvent the sky with our
+                dedication to quality, security, and individualized service.
+                Welcome to Skystream Charters, a place where travel goes
+                beyond the typical.
               </Typography>
             </Grid>
             <Grid item lg={3}>

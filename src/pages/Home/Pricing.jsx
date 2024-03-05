@@ -87,12 +87,12 @@ const Pricing = () => {
       price: "$18,000",
     },
     {
-      city: "Bucharest, Romania",
-      price: "$23,000",
+      city: "Moscow, Russia",
+      price: "$17,500",
     },
     {
-      city: "Barcelona, Spain",
-      price: "$19,500",
+      city: "London, UK",
+      price: "$21,000",
     },
   ];
   return (
