@@ -7,15 +7,29 @@ import { Box, Typography, Grid } from "@mui/material";
 import { userBookFlights } from "../../Services/ReadData";
 import { MdDeleteForever } from "react-icons/md";
 import { theme } from "../../Colors/color";
-import { doc, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  deleteDoc,
+  collection,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "../../Firebase/Config";
 const Index = () => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   const [flights, setFlight] = useState();
-  const handleDelete = async (index) => {
-    await deleteDoc(doc(db, "bookFlights", index));
-    fetch();
+  const handleDelete = async (index, seats, flightId) => {
+    const collRef = doc(db, "flights", flightId);
+
+    try {
+      const docData = (await getDoc(collRef)).data();
+      await updateDoc(collRef, {
+        "aircraft.capacity": Number(docData.aircraft.capacity) + Number(seats),
+      });
+      await deleteDoc(doc(db, "bookFlights", index));
+      fetch(currentUser.uid);
+    } catch (error) {}
   };
   const fetch = (id) => {
     userBookFlights(id).then((data) => {
@@ -164,7 +178,9 @@ const Index = () => {
                       color: "red",
                     }}
                     size={30}
-                    onClick={() => handleDelete(item.id)}
+                    onClick={() =>
+                      handleDelete(item.id, item.seats, item.flightInfo.id)
+                    }
                   />
                 </Box>
               );

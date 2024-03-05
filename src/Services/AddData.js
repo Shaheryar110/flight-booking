@@ -18,13 +18,12 @@ export const AddAirCraft = async (form) => {
 };
 
 export const AddAirport = async (form) => {
-  const { name, city, country } = form;
+  const { name, country } = form;
   const collRef = collection(db, "airports");
   try {
     const docRef = await addDoc(collRef, {
       name: name,
       country: country,
-      city: city,
     });
     console.log(docRef, "docRef");
     return { res: true };
