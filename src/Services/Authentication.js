@@ -4,6 +4,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth, db } from "../Firebase/Config";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import {
   addDoc,
   collection,
@@ -12,6 +13,8 @@ import {
   query,
   where,
 } from "firebase/firestore";
+
+const provider = new GoogleAuthProvider();
 
 export const SignUpFirebase = async (obj) => {
   const { name, email, phone, password, confirmPassword } = obj;
@@ -90,4 +93,37 @@ export const AdminLogin = async (form) => {
     console.log(error, "error");
     return { res: false };
   }
+};
+
+export const signInGoogle = async () => {
+  signInWithPopup(auth, provider)
+    .then(async (result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      if (user) {
+        await updateProfile(user, {
+          displayName: user.displayName,
+          phoneNumber: user.phoneNumber,
+        });
+
+        await addDoc(collection(db, "users"), {
+          name: user.displayName,
+          phone: user.phoneNumber,
+          email: user.email,
+          uid: user.uid,
+        });
+
+        return { res: true };
+      }
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      console.log(errorCode, errorMessage, email, credential);
+    });
 };

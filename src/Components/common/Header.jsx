@@ -1,6 +1,6 @@
 import { Avatar, Box, Container, Drawer, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import logo from "../../Assets/Images/logo.jpg";
+import logo from "../../Assets/Images/logo.png";
 import { theme } from "../../Colors/color";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
@@ -53,7 +53,7 @@ const Header = () => {
       });
   };
   return (
-    <Box sx={style.header}>
+    <Box sx={[style.header, { top: scrolled && 0 }]}>
       <Container
         sx={[
           {
@@ -67,11 +67,8 @@ const Header = () => {
       >
         <Box sx={style.row}>
           <Box sx={style.logoBox}>
-          <Link
-                to={"/"}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-            <img src={logo} style={{ width: "80px", height: "80px" }} />
+            <Link to={"/"} style={{ textDecoration: "none", color: "inherit" }}>
+              <img src={logo} style={{ width: "100px", height: "auto" }} />
             </Link>
             {/* <Typography
               sx={{ color: "white", fontSize: "30px", fontWeight: 600 }}

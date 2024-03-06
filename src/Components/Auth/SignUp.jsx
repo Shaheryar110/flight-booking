@@ -2,10 +2,11 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import bg from "../../Assets/Images/bg.jpeg";
 import { Link } from "react-router-dom";
-import { SignUpFirebase } from "../../Services/Authentication";
+import { SignUpFirebase, signInGoogle } from "../../Services/Authentication";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../Colors/color";
+import { FcGoogle } from "react-icons/fc";
 
 const initialState = {
   name: "",
@@ -64,6 +65,13 @@ const SignUp = () => {
         console.error(error, "error");
       }
     }
+  };
+  const signupGoogle = () => {
+    signInGoogle().then((data) => {
+      console.log(data, "ddata");
+      toast.success("Login Successfull");
+      navigate("/Customers");
+    });
   };
 
   return (
@@ -170,6 +178,14 @@ const SignUp = () => {
               Login
             </Link>
           </Typography>
+          <Button
+            variant="contained"
+            sx={[style.btn, { background: "#C7C8CC" }]}
+            onClick={signupGoogle}
+          >
+            <FcGoogle style={{ fontSize: "22px", marginRight: "5px" }} /> Sign
+            Up with Google
+          </Button>
           <Link to={"/"} style={{ textDecoration: "none", color: "inherit" }}>
             <Button variant="contained" sx={style.btn}>
               Back to Home page

@@ -4,8 +4,13 @@ import bg from "../../Assets/Images/bg.jpeg";
 import { theme } from "../../Colors/color";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { AdminLogin, LoginFirebase } from "../../Services/Authentication";
+import {
+  AdminLogin,
+  LoginFirebase,
+  signInGoogle,
+} from "../../Services/Authentication";
 import { AuthContext } from "../../Context/AuthContext";
+import { FcGoogle } from "react-icons/fc";
 const initialState = {
   email: "",
   password: "",
@@ -48,6 +53,13 @@ const Login = ({ admin }) => {
         toast.error("Invalid Credentials");
       }
     }
+  };
+  const signupGoogle = () => {
+    signInGoogle().then((data) => {
+      console.log(data, "ddata");
+      toast.success("Login Successfull");
+      navigate("/Customers");
+    });
   };
   return (
     <>
@@ -93,22 +105,30 @@ const Login = ({ admin }) => {
           <Button variant="contained" sx={style.btn} onClick={onSubmit}>
             LOG IN
           </Button>
-        { !admin && <Typography sx={style.slogan}>
-            Don't have an account?
-            <Link
-              to={"/SignUp"}
-              style={{ textDecoration: "none", color: theme.secondary }}
-            >
-              Register
-            </Link>
-          </Typography>}
-          <Link  to={"/"}
-                style={{ textDecoration: "none", color: "inherit" }}>
-          <Button variant="contained" sx={style.btn} >
-            Back to Home page 
+          <Button
+            variant="contained"
+            sx={[style.btn, { background: "#C7C8CC" }]}
+            onClick={signupGoogle}
+          >
+            <FcGoogle style={{ fontSize: "22px", marginRight: "5px" }} /> Sign
+            Up with Google
           </Button>
+          {!admin && (
+            <Typography sx={style.slogan}>
+              Don't have an account?
+              <Link
+                to={"/SignUp"}
+                style={{ textDecoration: "none", color: theme.secondary }}
+              >
+                Register
+              </Link>
+            </Typography>
+          )}
+          <Link to={"/"} style={{ textDecoration: "none", color: "inherit" }}>
+            <Button variant="contained" sx={style.btn}>
+              Back to Home page
+            </Button>
           </Link>
-         
         </Box>
       </Box>
     </>

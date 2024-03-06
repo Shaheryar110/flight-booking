@@ -1,7 +1,7 @@
 import { Box, Container, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import { theme } from "../../Colors/color";
-import logo from "../../Assets/Images/logo.jpg";
+import logo from "../../Assets/Images/logo.png";
 import one from "../../Assets/Images/1.jpg";
 import two from "../../Assets/Images/2.jpg";
 import three from "../../Assets/Images/3.jpg";
@@ -26,7 +26,7 @@ const Footer = () => {
                 alignItems: "center",
               }}
             >
-              <img src={logo} style={{ width: "150px", height: "150px" }} />
+              <img src={logo} style={{ width: "250px", height: "auto" }} />
               {/* <Typography
                 sx={{ color: "white", fontSize: "30px", fontWeight: 600 }}
               >
@@ -56,7 +56,7 @@ const Footer = () => {
               <Typography sx={style.heads}>NAVIAGTION LINKS</Typography>
               <Typography sx={style.desc}>Home</Typography>
               <Typography sx={style.desc}>Customer</Typography>
-              <Typography sx={style.desc}>Admin</Typography>
+              <Typography sx={style.desc}>Administrator</Typography>
             </Grid>
             {/* <Grid item lg={3} xs={12}>
               <Typography sx={style.heads}>INSTAFEED</Typography>
