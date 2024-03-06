@@ -26,7 +26,7 @@ export const DrawerList = ({ onClick }) => {
       icon: <AssignmentIndIcon sx={{ color: "inherit" }} />,
     },
     {
-      name: "Admin",
+      name: "Administrator",
       link: "/Aircrafts",
       icon: <AdminPanelSettingsIcon sx={{ color: "inherit" }} />,
     },

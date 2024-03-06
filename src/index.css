@@ -33,9 +33,9 @@ body {
 .input[type="submit"] {
   cursor: pointer;
 }
- .black{
+.black {
   color: black;
- }
+}
 .label {
   background-color: transparent;
   justify-self: start;
@@ -89,4 +89,8 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
+}
+.MuiContainer-root {
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
 }

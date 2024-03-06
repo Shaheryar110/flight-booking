@@ -68,7 +68,7 @@ const Header = () => {
         <Box sx={style.row}>
           <Box sx={style.logoBox}>
             <Link to={"/"} style={{ textDecoration: "none", color: "inherit" }}>
-              <img src={logo} style={{ width: "100px", height: "auto" }} />
+              <img src={logo} style={{ width: "120px", height: "auto" }} />
             </Link>
             {/* <Typography
               sx={{ color: "white", fontSize: "30px", fontWeight: 600 }}
